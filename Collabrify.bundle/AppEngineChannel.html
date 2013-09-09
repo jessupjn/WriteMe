@@ -1,0 +1,38 @@
+<html>
+    <head><title>AppEngineChannel</title></head>
+    <body>
+        <script src="https://talkgadget.google.com/talkgadget/channel.js"></script>
+        <script>
+            var queue  = [];
+            var iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'appenginechannel://ready';
+            
+            var fetch = function() {
+                if(iframe.parentNode) {
+                    iframe.parentNode.removeChild(iframe);
+                }
+                
+                var json = JSON.stringify(queue);
+                queue.length = 0;
+                return json;
+            };
+            
+            var dispatch = function(command, params) {
+                queue.push([command, params]);
+                
+                if(!iframe.parentNode) {
+                    document.body.appendChild(iframe);
+                }
+            };
+            
+            var channel = new goog.appengine.Channel('%@');
+            var socket = channel.open({
+                onmessage: function(data ) { dispatch('onmessage', data ); },
+                onerror:   function(error) { dispatch('onerror',   error); },
+                onopen:    function()      { dispatch('onopen'          ); },
+                onclose:   function()      { dispatch('onclose'         ); }
+            });
+        </script>
+    </body>
+</html>
