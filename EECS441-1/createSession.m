@@ -27,6 +27,16 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+  NSError *error;
+  client = [[CollabrifyClient alloc] initWithGmail:@"jessupjn@umich.edu"
+                                       displayName:@"Jack"
+                                      accountGmail:@"441fall2013@umich.edu"
+                                       accessToken:@"XY3721425NoScOpE"
+                                    getLatestEvent:NO
+                                             error:&error];
+  [client setDelegate:(id)self];
+  [client setDataSource:(id)self];
+  if(error) NSLog(@"GET THIS:/n%@", error);
 
   [infoBackground.layer setBorderWidth:3];
   [infoBackground.layer setCornerRadius:10];
@@ -89,7 +99,7 @@
 
 -(IBAction) create:(id) sender{
   [self.view endEditing:YES];
-  if ( [[userName text] isEqualToString:@""] || [[sessionName text] isEqualToString:@""]){
+  if ( [[userName text] isEqualToString:@""] || [[sessionName text] isEqualToString:@""]) {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Please make sure all required fields are filled!"
                                                         message:nil delegate:self
                                               cancelButtonTitle:@"Okay"
@@ -97,7 +107,20 @@
     [alertView show];
   }
   else{
-    [self performSegueWithIdentifier:@"createTheSession" sender:self];
+    NSArray *tags = [[NSArray alloc] initWithObjects:@"Some Tags", nil];
+    [client createSessionWithBaseFileWithName:[sessionName text]
+                                          tags:tags
+                                      password:[password text]
+                                   startPaused:NO
+                             completionHandler:^(int64_t sessionID, CollabrifyError *error){
+                              
+                               if(!error){
+                                NSLog(@"Session Successfully Created");
+                                [self performSegueWithIdentifier:@"createTheSession" sender:self];
+                               }
+                               else NSLog(@"%@", error);
+                              
+                              }];
   }
 }
 @end

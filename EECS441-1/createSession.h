@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Collabrify/Collabrify.h>
 
-@interface createSession : UIViewController{
+@interface createSession : UIViewController <CollabrifyClientDelegate, CollabrifyClientDataSource>{
   IBOutlet UIView *infoBackground;
   IBOutlet UITextField *sessionName;
   IBOutlet UITextField *userName;
   IBOutlet UITextField *password;
-
+  CollabrifyClient *client;
 
 }
 
