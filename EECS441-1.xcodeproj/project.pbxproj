@@ -11,15 +11,18 @@
 		0467E64C17DAC20D00F8AE10 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0467E64B17DAC20D00F8AE10 /* QuartzCore.framework */; };
 		0467E65017DD606900F8AE10 /* helpScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467E64F17DD606900F8AE10 /* helpScreen.m */; };
 		0467E65317DD6E8500F8AE10 /* createSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467E65217DD6E8500F8AE10 /* createSession.m */; };
-		0467E65617DD6E9200F8AE10 /* joinSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467E65517DD6E9200F8AE10 /* joinSession.m */; };
 		0467E65917DEA95900F8AE10 /* chat.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467E65817DEA95900F8AE10 /* chat.m */; };
+		04825B1F17DFBE83001518C0 /* Main-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04825B1D17DFBE83001518C0 /* Main-iPad.storyboard */; };
+		04825B2217DFE2C5001518C0 /* createSessioniPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 04825B2117DFE2C5001518C0 /* createSessioniPad.m */; };
+		04825B2517DFE829001518C0 /* joinSessioniPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 04825B2417DFE829001518C0 /* joinSessioniPad.m */; };
+		0493F2F217DF7B9C00CB4621 /* joinSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0493F2F117DF7B9C00CB4621 /* joinSession.m */; };
 		04E4274817DA53940081D40A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E4274717DA53940081D40A /* Foundation.framework */; };
 		04E4274A17DA53940081D40A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E4274917DA53940081D40A /* CoreGraphics.framework */; };
 		04E4274C17DA53940081D40A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E4274B17DA53940081D40A /* UIKit.framework */; };
 		04E4275217DA53940081D40A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04E4275017DA53940081D40A /* InfoPlist.strings */; };
 		04E4275417DA53940081D40A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E4275317DA53940081D40A /* main.m */; };
 		04E4275817DA53940081D40A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E4275717DA53940081D40A /* AppDelegate.m */; };
-		04E4275B17DA53940081D40A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04E4275917DA53940081D40A /* Main.storyboard */; };
+		04E4275B17DA53940081D40A /* Main-iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04E4275917DA53940081D40A /* Main-iPhone.storyboard */; };
 		04E4276017DA53940081D40A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E4275F17DA53940081D40A /* Images.xcassets */; };
 		04E4276717DA53950081D40A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E4276617DA53950081D40A /* XCTest.framework */; };
 		04E4276817DA53950081D40A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E4274717DA53940081D40A /* Foundation.framework */; };
@@ -83,10 +86,15 @@
 		0467E64F17DD606900F8AE10 /* helpScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = helpScreen.m; sourceTree = "<group>"; };
 		0467E65117DD6E8500F8AE10 /* createSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = createSession.h; sourceTree = "<group>"; };
 		0467E65217DD6E8500F8AE10 /* createSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = createSession.m; sourceTree = "<group>"; };
-		0467E65417DD6E9200F8AE10 /* joinSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = joinSession.h; path = ../joinSession.h; sourceTree = "<group>"; };
-		0467E65517DD6E9200F8AE10 /* joinSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = joinSession.m; path = ../joinSession.m; sourceTree = "<group>"; };
 		0467E65717DEA95900F8AE10 /* chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chat.h; sourceTree = "<group>"; };
 		0467E65817DEA95900F8AE10 /* chat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = chat.m; sourceTree = "<group>"; };
+		04825B1E17DFBE83001518C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "EECS441-1/Base.lproj/Main-iPad.storyboard"; sourceTree = "<group>"; };
+		04825B2017DFE2C5001518C0 /* createSessioniPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = createSessioniPad.h; sourceTree = "<group>"; };
+		04825B2117DFE2C5001518C0 /* createSessioniPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = createSessioniPad.m; sourceTree = "<group>"; };
+		04825B2317DFE829001518C0 /* joinSessioniPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = joinSessioniPad.h; sourceTree = "<group>"; };
+		04825B2417DFE829001518C0 /* joinSessioniPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = joinSessioniPad.m; sourceTree = "<group>"; };
+		0493F2F017DF7B9C00CB4621 /* joinSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = joinSession.h; sourceTree = "<group>"; };
+		0493F2F117DF7B9C00CB4621 /* joinSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = joinSession.m; sourceTree = "<group>"; };
 		04E4274417DA53940081D40A /* EECS441-1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EECS441-1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E4274717DA53940081D40A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04E4274917DA53940081D40A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -97,7 +105,7 @@
 		04E4275517DA53940081D40A /* EECS441-1-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EECS441-1-Prefix.pch"; sourceTree = "<group>"; };
 		04E4275617DA53940081D40A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		04E4275717DA53940081D40A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		04E4275A17DA53940081D40A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		04E4275A17DA53940081D40A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Main-iPhone.storyboard"; sourceTree = "<group>"; };
 		04E4275F17DA53940081D40A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		04E4276517DA53950081D40A /* EECS441-1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EECS441-1Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E4276617DA53950081D40A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -230,12 +238,23 @@
 				0467E64F17DD606900F8AE10 /* helpScreen.m */,
 				0467E65117DD6E8500F8AE10 /* createSession.h */,
 				0467E65217DD6E8500F8AE10 /* createSession.m */,
-				0467E65417DD6E9200F8AE10 /* joinSession.h */,
-				0467E65517DD6E9200F8AE10 /* joinSession.m */,
+				04825B2017DFE2C5001518C0 /* createSessioniPad.h */,
+				04825B2117DFE2C5001518C0 /* createSessioniPad.m */,
+				0493F2F017DF7B9C00CB4621 /* joinSession.h */,
+				0493F2F117DF7B9C00CB4621 /* joinSession.m */,
+				04825B2317DFE829001518C0 /* joinSessioniPad.h */,
+				04825B2417DFE829001518C0 /* joinSessioniPad.m */,
 				0467E65717DEA95900F8AE10 /* chat.h */,
 				0467E65817DEA95900F8AE10 /* chat.m */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		04825B1C17DFBE41001518C0 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
 			sourceTree = "<group>";
 		};
 		04E4273B17DA53940081D40A = {
@@ -278,10 +297,12 @@
 		04E4274D17DA53940081D40A /* EECS441-1 */ = {
 			isa = PBXGroup;
 			children = (
+				04825B1C17DFBE41001518C0 /* iPad */,
 				04E4275617DA53940081D40A /* AppDelegate.h */,
 				04E4275717DA53940081D40A /* AppDelegate.m */,
 				0467E64D17DD5AB200F8AE10 /* View Controllers */,
-				04E4275917DA53940081D40A /* Main.storyboard */,
+				04E4275917DA53940081D40A /* Main-iPhone.storyboard */,
+				04825B1D17DFBE83001518C0 /* Main-iPad.storyboard */,
 				04E4275F17DA53940081D40A /* Images.xcassets */,
 				04E4274E17DA53940081D40A /* Supporting Files */,
 			);
@@ -523,8 +544,9 @@
 			files = (
 				04E4277E17DA53E10081D40A /* Collabrify.bundle in Resources */,
 				04E4276017DA53940081D40A /* Images.xcassets in Resources */,
+				04825B1F17DFBE83001518C0 /* Main-iPad.storyboard in Resources */,
 				04E4275217DA53940081D40A /* InfoPlist.strings in Resources */,
-				04E4275B17DA53940081D40A /* Main.storyboard in Resources */,
+				04E4275B17DA53940081D40A /* Main-iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,9 +583,9 @@
 				04E427EE17DA56390081D40A /* common.cc in Sources */,
 				04E427EC17DA56390081D40A /* atomicops_internals_x86_gcc.cc in Sources */,
 				04E427EA17DA56390081D40A /* repeated_field.cc in Sources */,
-				0467E65617DD6E9200F8AE10 /* joinSession.m in Sources */,
 				04E4275817DA53940081D40A /* AppDelegate.m in Sources */,
 				04E427DC17DA56390081D40A /* dynamic_message.cc in Sources */,
+				0493F2F217DF7B9C00CB4621 /* joinSession.m in Sources */,
 				04E427ED17DA56390081D40A /* atomicops_internals_x86_msvc.cc in Sources */,
 				04E427DD17DA56390081D40A /* extension_set.cc in Sources */,
 				04E427E417DA56390081D40A /* zero_copy_stream.cc in Sources */,
@@ -579,6 +601,8 @@
 				0467E64A17DABF8A00F8AE10 /* TitleScreen.m in Sources */,
 				04E427E017DA56390081D40A /* generated_message_util.cc in Sources */,
 				04E4275417DA53940081D40A /* main.m in Sources */,
+				04825B2517DFE829001518C0 /* joinSessioniPad.m in Sources */,
+				04825B2217DFE2C5001518C0 /* createSessioniPad.m in Sources */,
 				0467E65017DD606900F8AE10 /* helpScreen.m in Sources */,
 				04E427F517DA56390081D40A /* googletest.cc in Sources */,
 				04E427EB17DA56390081D40A /* service.cc in Sources */,
@@ -605,6 +629,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		04825B1D17DFBE83001518C0 /* Main-iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04825B1E17DFBE83001518C0 /* Base */,
+			);
+			name = "Main-iPad.storyboard";
+			path = ..;
+			sourceTree = "<group>";
+		};
 		04E4275017DA53940081D40A /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -613,12 +646,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		04E4275917DA53940081D40A /* Main.storyboard */ = {
+		04E4275917DA53940081D40A /* Main-iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				04E4275A17DA53940081D40A /* Base */,
 			);
-			name = Main.storyboard;
+			name = "Main-iPhone.storyboard";
 			sourceTree = "<group>";
 		};
 		04E4276F17DA53950081D40A /* InfoPlist.strings */ = {
@@ -715,7 +748,9 @@
 				GCC_PREFIX_HEADER = "EECS441-1/EECS441-1-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Google Protocol Buffers\"";
 				INFOPLIST_FILE = "EECS441-1/EECS441-1-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -733,7 +768,9 @@
 				GCC_PREFIX_HEADER = "EECS441-1/EECS441-1-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Google Protocol Buffers\"";
 				INFOPLIST_FILE = "EECS441-1/EECS441-1-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

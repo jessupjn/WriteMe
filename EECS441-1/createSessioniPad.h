@@ -1,8 +1,8 @@
 //
-//  createSession.h
+//  createSessioniPad.h
 //  EECS441-1
 //
-//  Created by Jackson on 9/8/13.
+//  Created by Jackson on 9/10/13.
 //
 //
 
@@ -10,7 +10,7 @@
 #import <Collabrify/Collabrify.h>
 #import "chat.h"
 
-@interface createSession : UIViewController <CollabrifyClientDelegate, CollabrifyClientDataSource>{
+@interface createSessioniPad : UIViewController <CollabrifyClientDelegate, CollabrifyClientDataSource>{
   IBOutlet UIView *infoBackground;
   IBOutlet UITextField *sessionName;
   IBOutlet UITextField *password;
@@ -19,6 +19,7 @@
 
 }
 @property (nonatomic, retain) CollabrifyClient *client;
+
 
 -(IBAction) back:(id) sender;
 -(IBAction) create:(id) sender;

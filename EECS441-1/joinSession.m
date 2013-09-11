@@ -1,20 +1,21 @@
 //
-//  createSession.m
+//  joinSession.m
 //  EECS441-1
 //
 //  Created by Jackson on 9/8/13.
 //
 //
 
-#import "createSession.h"
+#import "joinSession.h"
 
-@interface createSession ()
+@interface joinSession ()
 
 @end
 
-@implementation createSession
+@implementation joinSession
 
 @synthesize client;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -25,10 +26,11 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-  // Do any additional setup after loading the view.
+	// Do any additional setup after loading the view.
   [client setDelegate:(id)self];
   [client setDataSource:(id)self];
   
@@ -50,7 +52,7 @@
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-  if([[segue identifier] isEqualToString:@"createTheSession"]){
+  if([[segue identifier] isEqualToString:@"joinTheSession"]){
     chat *nextScreen = [segue destinationViewController];
     [nextScreen setClient:client];
   }
@@ -87,14 +89,10 @@
   [textField resignFirstResponder];
   return NO;
 }
-
 // ---------------------------------------------------------------
 // ---------------------------------------------------------------
 
 
-
-//                      BACK/FORWARD BUTTONS
-// ---------------------------------------------------------------
 -(IBAction) back:(id) sender{
   [self.view endEditing:YES];
   [self dismissViewControllerAnimated:YES completion:^{
@@ -102,30 +100,21 @@
   }];
 }
 
--(IBAction) create:(id) sender{
+-(IBAction) join:(id) sender{
   [self.view endEditing:YES];
-  if ( [[sessionName text] isEqualToString:@""]) {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Please make sure all required fields are filled!"
+  if ( [[sessionName text] isEqualToString:@""]){
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Please make sure all necessary fields are filled!"
                                                         message:nil delegate:self
                                               cancelButtonTitle:@"Okay"
                                               otherButtonTitles:nil];
     [alertView show];
   }
   else{
-    NSArray *tags = [[NSArray alloc] initWithObjects:@"Some Tags", nil];
-    [client createSessionWithBaseFileWithName:[sessionName text]
-                                          tags:tags
-                                      password:[password text]
-                                   startPaused:NO
-                             completionHandler:^(int64_t sessionID, CollabrifyError *error){
-                              
-                               if(!error){
-                                NSLog(@"Session Successfully Created");
-                                [self performSegueWithIdentifier:@"createTheSession" sender:self];
-                               }
-                               else NSLog(@"%@", error);
-                              
-                              }];
+    [client joinSessionWithID:atoll([[sessionName text] UTF8String]) password:[password text] completionHandler:^(int64_t maxOrderID, int32_t baseFileSize, CollabrifyError *error) {
+      if(!error) [self performSegueWithIdentifier:@"joinTheSession" sender:self];
+      else NSLog(@"%@", error);
+    }];
   }
 }
+
 @end
