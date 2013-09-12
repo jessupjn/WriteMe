@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4504" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KsK-eM-wjJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KsK-eM-wjJ">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3734.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
         <!--Title View-->
@@ -68,7 +68,7 @@
                                 <rect key="frame" x="57" y="319" width="207" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                 <connections>
                                     <action selector="editingChanged" destination="KsK-eM-wjJ" eventType="editingDidEnd" id="AZL-fd-yQT"/>
                                 </connections>
@@ -160,7 +160,7 @@
                         <outlet property="infoBackground" destination="y9K-x6-e1H" id="4up-Ou-ZmB"/>
                         <outlet property="password" destination="5Wz-Ef-zdR" id="4u3-3D-XUs"/>
                         <outlet property="sessionName" destination="1QL-Sk-Cva" id="hko-fz-9k4"/>
-                        <segue destination="okD-Lf-3Nr" kind="push" identifier="joinTheSession" id="yhC-cR-D65"/>
+                        <segue destination="DeA-7w-eJt" kind="push" identifier="joinTheSession" id="qS9-ZR-nWf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eqb-Rd-WY4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -292,71 +292,58 @@
                         <outlet property="infoBackground" destination="342-qm-Lzh" id="uhf-fb-EFN"/>
                         <outlet property="password" destination="Jir-xs-M0W" id="FXt-15-d3e"/>
                         <outlet property="sessionName" destination="Pyo-N1-Cwz" id="6IR-4W-XIo"/>
-                        <segue destination="okD-Lf-3Nr" kind="push" identifier="createTheSession" id="05x-D4-9DT"/>
+                        <segue destination="DeA-7w-eJt" kind="push" identifier="createTheSession" id="uzU-C5-8wK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qE1-3n-adg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="246" y="768"/>
         </scene>
-        <!--Chat-->
-        <scene sceneID="Myl-um-7te">
+        <!--Chat - Notepad-->
+        <scene sceneID="Y8R-XM-sQH">
             <objects>
-                <viewController storyboardIdentifier="chat" id="okD-Lf-3Nr" userLabel="Chat" customClass="chat" sceneMemberID="viewController">
+                <viewController id="DeA-7w-eJt" customClass="chat" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="1DZ-Qx-X9V"/>
-                        <viewControllerLayoutGuide type="bottom" id="Kd2-bz-e2Q"/>
+                        <viewControllerLayoutGuide type="top" id="j98-6i-85m"/>
+                        <viewControllerLayoutGuide type="bottom" id="JOO-7W-Pbu"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="9hB-Jx-kIt">
+                    <view key="view" contentMode="scaleToFill" id="Kh3-Y1-iA7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A5S-1K-ned">
-                                <rect key="frame" x="0.0" y="95" width="320" height="429"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QQp-3Y-wxn">
-                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem systemItem="undo" id="AmN-LE-RWd"/>
-                                    <barButtonItem systemItem="done" id="4cE-d3-WGG"/>
-                                    <barButtonItem systemItem="redo" id="KK8-Mg-QDc"/>
-                                </items>
-                            </toolbar>
-                            <view alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsr-Nl-8O3">
-                                <rect key="frame" x="320" y="95" width="320" height="505"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="juF-1m-oR8">
+                                <rect key="frame" x="0.0" y="94" width="320" height="474"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A5S-1K-ned">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="474"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="484-7z-eNM">
-                                <rect key="frame" x="380" y="95" width="200" height="505"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Notepad" prompt="a prompt" id="pzw-KQ-TeF">
+                    <navigationItem key="navigationItem" title="Notepad" prompt="prompt" id="9pA-Cp-Jg2">
                         <barButtonItem key="rightBarButtonItem" title="Users" id="jlx-0h-u4f">
                             <connections>
-                                <action selector="showUsers:" destination="okD-Lf-3Nr" id="r7j-cd-642"/>
+                                <action selector="showUsers:" destination="DeA-7w-eJt" id="vzX-yD-Bri"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="listUsers" destination="484-7z-eNM" id="OE7-HQ-Z5O"/>
-                        <outlet property="showUsersBackground" destination="nsr-Nl-8O3" id="vzF-gl-Jcc"/>
-                        <outlet property="usersToggle" destination="jlx-0h-u4f" id="84D-iB-aV7"/>
+                        <outlet property="noteData" destination="A5S-1K-ned" id="4BH-p3-Y1l"/>
+                        <outlet property="usersToggle" destination="jlx-0h-u4f" id="4Sc-30-jkP"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="r5Y-Z1-aQ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T81-V8-U6G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1235" y="403"/>
+            <point key="canvasLocation" x="1159" y="370"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0jD-Ha-My7">
@@ -383,6 +370,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="yhC-cR-D65"/>
+        <segue reference="qS9-ZR-nWf"/>
     </inferredMetricsTieBreakers>
 </document>

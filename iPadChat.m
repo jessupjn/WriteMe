@@ -1,18 +1,18 @@
 //
-//  chat.m
+//  iPadChat.m
 //  EECS441-1
 //
-//  Created by Jackson on 9/9/13.
+//  Created by Jackson on 9/12/13.
 //
 //
 
-#import "chat.h"
+#import "iPadChat.h"
 
-@interface chat ()
+@interface iPadChat ()
 
 @end
 
-@implementation chat
+@implementation iPadChat
 
 @synthesize client;
 @synthesize listUsers;
@@ -43,39 +43,26 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    // Custom initialization
+  }
+  return self;
 }
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+  [super viewDidLoad];
 	// Do any additional setup after loading the view.
   NSLog(@"---------- MADE IT");
   sessionID = [NSString stringWithFormat:@"Session ID: %lli", [client currentSessionID]];
   [[self navigationItem] setPrompt:sessionID];
-  [usersToggle setTitle:@"Show Users"];
   [listUsers.layer setBorderWidth:1];
+  [noteData.layer setBorderWidth:1];
   
   [self performSelector:@selector(reloadTable)];
   [noteData setDelegate:(id)self];
   [self buildButtons];
-  
-  [noteData setFrame:CGRectMake(0, 94, 320, 474)];
-  [noteData setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
-  
-  showUsersBackground = [[UIView alloc] initWithFrame:CGRectMake(320, 94, 320, 474)];
-  [showUsersBackground setBackgroundColor:[UIColor blackColor]];
-  [showUsersBackground setAlpha:0.7];
-  listUsers = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 200, 474)];
-  [listUsers setCenter:[showUsersBackground center]];
-  [[self view] addSubview:showUsersBackground];
-  [[self view] addSubview:listUsers];
-  
-  [noteData.layer setBorderWidth:1];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notepadSizeUp:) name:UIKeyboardWillHideNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notepadSizeDown:) name:UIKeyboardDidShowNotification object:nil];
@@ -83,8 +70,8 @@
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
@@ -94,31 +81,6 @@
     }
     else NSLog(@"ERROR: %@", error);
   }];
-  [noteData resignFirstResponder];
-
-}
-
--(IBAction) showUsers:(id) sender{
-  NSLog(@"MADE IT");
-  [noteData resignFirstResponder];
-  if([[usersToggle title] isEqualToString:@"Show Users"]){
-    [self performSelector:@selector(reloadTable)];
-
-    [[self navigationItem] setTitle:iPadUsersTitle];
-    [UIView animateWithDuration:0.3 animations:^(void){
-      [showUsersBackground setFrame:CGRectMake(0, 94, 320, 474)];
-      [listUsers setFrame:CGRectMake(60, 94, 200, 474)];
-      [usersToggle setTitle:@"Hide Users"];
-    }];
-  }
-  else{
-    [[self navigationItem] setTitle:@"Notepad"];
-      [UIView animateWithDuration:0.2 animations:^(void){
-      [showUsersBackground setFrame:CGRectMake(320, 94, 320, 474)];
-      [listUsers setFrame:CGRectMake(380, 94, 200, 474)];
-      [usersToggle setTitle:@"Show Users"];
-    }];
-  }
 }
 
 -(void) reloadTable{
@@ -176,16 +138,23 @@
   [keyboardbuttons setItems:items animated:YES];
 }
 -(void)doneButton{
+  NSLog(@"HERE");
   [noteData resignFirstResponder];
+  NSLog(@"DONE");
 }
 - (void)notepadSizeDown:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
+  NSLog(@"%i", keyboardHeight);
   [noteData setFrame:CGRectMake(0, 0, noteData.frame.size.width, noteData.frame.size.height - keyboardHeight)];
+  [listUsers setFrame:CGRectMake(0, 44, listUsers.frame.size.width, listUsers.frame.size.height - keyboardHeight)];
 }
 
 - (void)notepadSizeUp:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
+  NSLog(@"%f",noteData.frame.size.height);
   [noteData setFrame:CGRectMake(0, 0, noteData.frame.size.width, noteData.frame.size.height + keyboardHeight)];
+  [listUsers setFrame:CGRectMake(0, 44, listUsers.frame.size.width, listUsers.frame.size.height + keyboardHeight)];
+  NSLog(@"%f",noteData.frame.size.height);
 }
 // ---------------------------------------------------------------
 // ---------------------------------------------------------------

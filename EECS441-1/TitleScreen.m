@@ -76,8 +76,6 @@
                                          accessToken:@"XY3721425NoScOpE"
                                       getLatestEvent:NO
                                                error:&error];
-    [client setDelegate:(id)self];
-    [client setDataSource:(id)self];
   }
 }
 

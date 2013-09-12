@@ -16,7 +16,13 @@
   IBOutlet UITextField *password;
   CollabrifyClient *client;
   NSString *userName;
-
+  
+  
+  // hold user while creating session.
+  UIView *wholeScreen;
+  UIView *visableObj;
+  UIActivityIndicatorView *spinner;
+  
 }
 @property (nonatomic, retain) CollabrifyClient *client;
 

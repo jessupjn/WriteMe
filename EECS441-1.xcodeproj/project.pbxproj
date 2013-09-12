@@ -16,6 +16,7 @@
 		04825B2217DFE2C5001518C0 /* createSessioniPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 04825B2117DFE2C5001518C0 /* createSessioniPad.m */; };
 		04825B2517DFE829001518C0 /* joinSessioniPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 04825B2417DFE829001518C0 /* joinSessioniPad.m */; };
 		0493F2F217DF7B9C00CB4621 /* joinSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0493F2F117DF7B9C00CB4621 /* joinSession.m */; };
+		04AB37AB17E268FF00E53C9D /* iPadChat.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AB37AA17E268FF00E53C9D /* iPadChat.m */; };
 		04E4274817DA53940081D40A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E4274717DA53940081D40A /* Foundation.framework */; };
 		04E4274A17DA53940081D40A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E4274917DA53940081D40A /* CoreGraphics.framework */; };
 		04E4274C17DA53940081D40A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E4274B17DA53940081D40A /* UIKit.framework */; };
@@ -95,6 +96,8 @@
 		04825B2417DFE829001518C0 /* joinSessioniPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = joinSessioniPad.m; sourceTree = "<group>"; };
 		0493F2F017DF7B9C00CB4621 /* joinSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = joinSession.h; sourceTree = "<group>"; };
 		0493F2F117DF7B9C00CB4621 /* joinSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = joinSession.m; sourceTree = "<group>"; };
+		04AB37A917E268FF00E53C9D /* iPadChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPadChat.h; path = ../iPadChat.h; sourceTree = "<group>"; };
+		04AB37AA17E268FF00E53C9D /* iPadChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPadChat.m; path = ../iPadChat.m; sourceTree = "<group>"; };
 		04E4274417DA53940081D40A /* EECS441-1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EECS441-1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E4274717DA53940081D40A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04E4274917DA53940081D40A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -246,6 +249,8 @@
 				04825B2417DFE829001518C0 /* joinSessioniPad.m */,
 				0467E65717DEA95900F8AE10 /* chat.h */,
 				0467E65817DEA95900F8AE10 /* chat.m */,
+				04AB37A917E268FF00E53C9D /* iPadChat.h */,
+				04AB37AA17E268FF00E53C9D /* iPadChat.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -579,6 +584,7 @@
 				04E427F717DA56390081D40A /* unknown_field_set.cc in Sources */,
 				04E427D917DA56390081D40A /* descriptor.cc in Sources */,
 				04E427E217DA56390081D40A /* printer.cc in Sources */,
+				04AB37AB17E268FF00E53C9D /* iPadChat.m in Sources */,
 				04E427F817DA56390081D40A /* wire_format.cc in Sources */,
 				04E427EE17DA56390081D40A /* common.cc in Sources */,
 				04E427EC17DA56390081D40A /* atomicops_internals_x86_gcc.cc in Sources */,
