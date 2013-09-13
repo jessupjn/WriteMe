@@ -8,7 +8,7 @@
 
 #import "iPadChat.h"
 
-@interface iPadChat ()
+@interface iPadChat () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, CollabrifyClientDataSource, CollabrifyClientDelegate>
 
 @end
 
@@ -33,10 +33,12 @@
   }
   
   // Set up the cell...
-  NSLog(@"%@", currentUsers[indexPath.row]);
   [[cell textLabel] setText: [currentUsers[indexPath.row] displayName]];
   [[cell textLabel] setTextAlignment:NSTextAlignmentCenter];
   return cell;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+  return 0.0;
 }
 
 
@@ -54,18 +56,26 @@
 {
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
-  NSLog(@"---------- MADE IT");
-  sessionID = [NSString stringWithFormat:@"Session ID: %lli", [client currentSessionID]];
-  [[self navigationItem] setPrompt:sessionID];
   [listUsers.layer setBorderWidth:1];
+  [iPadUsersBar.layer setBorderWidth:1];
   [noteData.layer setBorderWidth:1];
   
   [self performSelector:@selector(reloadTable)];
-  [noteData setDelegate:(id)self];
-  [self buildButtons];
+  [noteData setDelegate:self];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notepadSizeUp:) name:UIKeyboardWillHideNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notepadSizeDown:) name:UIKeyboardDidShowNotification object:nil];
+  [listUsers setDelegate:self];
+  [listUsers setDataSource:self];
+  [client setDelegate:self];
+  [client setDataSource:self];
+
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+  [[self navigationItem] setPrompt:[NSString stringWithFormat:@"Session ID: %lli", [client currentSessionID]]];
+  [self buildButtons];
+  [self reloadTable];
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,9 +93,13 @@
   }];
 }
 
+-(IBAction)reloadButton:(id)sender{
+  NSLog(@"ID: %llu", [client currentSessionID]);
+  [client broadcast:@"hi guys" eventType:@"update"];
+  [self reloadTable];
+}
 -(void) reloadTable{
   
-  dispatch_async( dispatch_get_main_queue(), ^{
     // Add code here to update the UI/send notifications based on the
     // results of the background processing
     currentUsers = [client currentSessionParticipants];
@@ -93,12 +107,12 @@
     
     NSLog(@"%@", currentUsers);
     
-    if (numUsers <= 1)
+    if (numUsers == 1)
       iPadUsersTitle = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d User", numUsers]];
     else
       iPadUsersTitle = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d Users", numUsers]];
+    [iPadBar setTitle:iPadUsersTitle];
     [listUsers reloadData];
-  });
 }
 
 //                    KEYBOARD MOVEMENTS/LOGISTICS

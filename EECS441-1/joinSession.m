@@ -8,7 +8,7 @@
 
 #import "joinSession.h"
 
-@interface joinSession ()
+@interface joinSession () <UITextFieldDelegate, CollabrifyClientDelegate, CollabrifyClientDataSource>
 
 @end
 
@@ -50,8 +50,8 @@
   [[self view] addSubview:visableObj];
   [[self view] addSubview:spinner];
   
-  [client setDelegate:(id)self];
-  [client setDataSource:(id)self];
+  [client setDelegate:self];
+  [client setDataSource:self];
   
   [infoBackground.layer setBorderWidth:3];
   [infoBackground.layer setCornerRadius:10];

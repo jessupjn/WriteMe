@@ -10,7 +10,7 @@
 #import <Collabrify/Collabrify.h>
 #import "chat.h"
 
-@interface createSession : UIViewController <CollabrifyClientDelegate, CollabrifyClientDataSource>{
+@interface createSession : UIViewController{
   IBOutlet UIView *infoBackground;
   IBOutlet UITextField *sessionName;
   IBOutlet UITextField *password;

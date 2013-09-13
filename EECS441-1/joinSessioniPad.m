@@ -8,7 +8,7 @@
 
 #import "joinSessioniPad.h"
 
-@interface joinSessioniPad ()
+@interface joinSessioniPad () <UITextFieldDelegate, CollabrifyClientDelegate, CollabrifyClientDataSource>
 
 @end
 
@@ -16,6 +16,9 @@
 
 @synthesize client;
 
+- (void)client:(CollabrifyClient *)client receivedBaseFileChunk:(NSData *)data{
+  
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,14 +53,14 @@
   [[self view] addSubview:visableObj];
   [[self view] addSubview:spinner];
   
-  [client setDelegate:(id)self];
-  [client setDataSource:(id)self];
+  [client setDelegate:self];
+  [client setDataSource:self];
   
   [infoBackground.layer setBorderWidth:3];
   [infoBackground.layer setCornerRadius:10];
   
-  [sessionName setDelegate:(id)self];
-  [password setDelegate:(id)self];
+  [sessionName setDelegate:self];
+  [password setDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -117,6 +120,7 @@
     [client joinSessionWithID:atoll([[sessionName text] UTF8String]) password:[password text] completionHandler:^(int64_t maxOrderID, int32_t baseFileSize, CollabrifyError *error) {
       if(!error){
         NSLog(@"Session Successfully Joined");
+        NSLog(@"%llu", [client currentSessionID]);
         [self performSegueWithIdentifier:@"joinTheSession" sender:self];
       }
       else{

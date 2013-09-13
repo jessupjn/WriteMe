@@ -8,7 +8,7 @@
 
 #import "TitleScreen.h"
 
-@interface TitleScreen ()
+@interface TitleScreen () <UITextFieldDelegate, CollabrifyClientDelegate, CollabrifyClientDelegate>
 
 @end
 
@@ -31,7 +31,7 @@
   [logo.layer setBorderWidth:2];
   [logo.layer setCornerRadius:16];
   
-  [userName setDelegate:(id)self];
+  [userName setDelegate:self];
 
   }
 
@@ -70,7 +70,7 @@
     [JoinButton setEnabled:YES];
     [CreateButton setEnabled:YES];
     NSError *error;
-    client = [[CollabrifyClient alloc] initWithGmail:@"jessupjn@umich.edu"
+    client = [[CollabrifyClient alloc] initWithGmail:@""
                                          displayName:[userName text]
                                         accountGmail:@"441fall2013@umich.edu"
                                          accessToken:@"XY3721425NoScOpE"

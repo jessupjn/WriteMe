@@ -8,13 +8,17 @@
 
 #import "createSessioniPad.h"
 
-@interface createSessioniPad ()
+@interface createSessioniPad () <UITextFieldDelegate, CollabrifyClientDelegate, CollabrifyClientDataSource>
 
 @end
 
 @implementation createSessioniPad
 
 @synthesize client;
+
+- (NSData *)client:(CollabrifyClient *)client requestsBaseFileChunkForCurrentBaseFileSize:(NSInteger)baseFileSize{
+  return nil;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,14 +51,14 @@
   [[self view] addSubview:spinner];
   
   
-  [client setDelegate:(id)self];
-  [client setDataSource:(id)self];
+  [client setDelegate:self];
+  [client setDataSource:self];
   
   [infoBackground.layer setBorderWidth:3];
   [infoBackground.layer setCornerRadius:10];
   
-  [sessionName setDelegate:(id)self];
-  [password setDelegate:(id)self];
+  [sessionName setDelegate:self];
+  [password setDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -119,7 +123,7 @@
                                          tags:tags
                                      password:[password text]
                                   startPaused:NO
-                            completionHandler:^(int64_t sessionID, CollabrifyError *error){
+                            completionHandler:^(int64_t sessionID, CollabrifyError *error) {
                               
                               if(!error){
                                 NSLog(@"Session Successfully Created");

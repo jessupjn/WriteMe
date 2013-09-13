@@ -305,7 +305,7 @@
                                             <navigationItem title="Users" id="td7-Jv-YWu">
                                                 <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="NBn-k7-KdZ">
                                                     <connections>
-                                                        <action selector="reloadButton:" destination="CLj-Sf-6G4" id="spX-Z3-0UV"/>
+                                                        <action selector="reloadButton:" destination="CLj-Sf-6G4" id="w5L-F9-EZh"/>
                                                     </connections>
                                                 </barButtonItem>
                                             </navigationItem>

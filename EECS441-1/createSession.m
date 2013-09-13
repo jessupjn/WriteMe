@@ -8,13 +8,17 @@
 
 #import "createSession.h"
 
-@interface createSession ()
+@interface createSession () <UITextFieldDelegate, CollabrifyClientDelegate, CollabrifyClientDataSource>
 
 @end
 
 @implementation createSession
 
 @synthesize client;
+
+- (NSData *)client:(CollabrifyClient *)client requestsBaseFileChunkForCurrentBaseFileSize:(NSInteger)baseFileSize{
+  return nil;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,14 +50,14 @@
   [[self view] addSubview:visableObj];
   [[self view] addSubview:spinner];
   
-  [client setDelegate:(id)self];
-  [client setDataSource:(id)self];
+  [client setDelegate:self];
+  [client setDataSource:self];
   
   [infoBackground.layer setBorderWidth:3];
   [infoBackground.layer setCornerRadius:10];
   
-  [sessionName setDelegate:(id)self];
-  [password setDelegate:(id)self];
+  [sessionName setDelegate:self];
+  [password setDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -138,11 +142,11 @@
   }
   else{
     NSArray *tags = [[NSArray alloc] initWithObjects:@"Some Tags", nil];
-    [client createSessionWithBaseFileWithName:[sessionName text]
-                                          tags:tags
-                                      password:[password text]
-                                   startPaused:NO
-                             completionHandler:^(int64_t sessionID, CollabrifyError *error){
+    [client createSessionWithName:[sessionName text]
+                             tags:tags
+                         password:[password text]
+                      startPaused:NO
+                completionHandler:^(int64_t sessionID, CollabrifyError *error) {
                               
                                if(!error){
                                 NSLog(@"Session Successfully Created");

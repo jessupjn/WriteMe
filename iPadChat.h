@@ -25,13 +25,13 @@
 
   NSUInteger numUsers;
   NSArray *currentUsers;
-  NSString *sessionID;
 
 }
 
 @property (nonatomic, retain)  CollabrifyClient *client;
 @property (nonatomic, retain)  UITableView *listUsers;
 
+-(IBAction)reloadButton:(id)sender;
 -(void) reloadTable;
 
 @end

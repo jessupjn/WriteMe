@@ -8,7 +8,7 @@
 
 #import "chat.h"
 
-@interface chat ()
+@interface chat () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, CollabrifyClientDataSource, CollabrifyClientDelegate>
 
 @end
 
@@ -33,7 +33,7 @@
   }
   
   // Set up the cell...
-  NSLog(@"%@", currentUsers[indexPath.row]);
+  NSLog(@"%@", [currentUsers[indexPath.row] displayName]);
   [[cell textLabel] setText: [currentUsers[indexPath.row] displayName]];
   [[cell textLabel] setTextAlignment:NSTextAlignmentCenter];
   return cell;
@@ -54,7 +54,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-  NSLog(@"---------- MADE IT");
   sessionID = [NSString stringWithFormat:@"Session ID: %lli", [client currentSessionID]];
   [[self navigationItem] setPrompt:sessionID];
   [usersToggle setTitle:@"Show Users"];
@@ -74,7 +73,13 @@
   [listUsers setCenter:[showUsersBackground center]];
   [[self view] addSubview:showUsersBackground];
   [[self view] addSubview:listUsers];
-  
+  [listUsers setDelegate:(id)self];
+  [listUsers setDataSource:(id)self];
+  NSLog(@"---------------------");
+  NSLog(@"%lu", (unsigned long)[client currentSessionParticipantCount]);
+  NSLog(@"%@", [client currentSessionParticipants]);
+  NSLog(@"---------------------");
+
   [noteData.layer setBorderWidth:1];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notepadSizeUp:) name:UIKeyboardWillHideNotification object:nil];
@@ -99,7 +104,6 @@
 }
 
 -(IBAction) showUsers:(id) sender{
-  NSLog(@"MADE IT");
   [noteData resignFirstResponder];
   if([[usersToggle title] isEqualToString:@"Show Users"]){
     [self performSelector:@selector(reloadTable)];
@@ -129,8 +133,7 @@
     currentUsers = [client currentSessionParticipants];
     numUsers = [client currentSessionParticipantCount];
     
-    NSLog(@"%@", currentUsers);
-    
+    NSLog(@"%@ users currently in chat", currentUsers);
     if (numUsers <= 1)
       iPadUsersTitle = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d User", numUsers]];
     else
