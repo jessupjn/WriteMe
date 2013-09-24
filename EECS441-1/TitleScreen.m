@@ -27,7 +27,18 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-
+  if ( !IS_IPAD && !IS_IPHONE_5 ){
+    [logo setHidden:YES];
+    UIImageView *newLogo = [[UIImageView alloc] initWithFrame:CGRectMake(60, 40, 200, 200)];
+    [newLogo setImage:[UIImage imageNamed:@"Notepad-icon.png"]];
+    
+    [self.view addSubview:newLogo];
+    [newLogo.layer setBorderWidth:2];
+    [newLogo.layer setCornerRadius:16];
+    
+    
+    
+  }
   [logo.layer setBorderWidth:2];
   [logo.layer setCornerRadius:16];
   
@@ -70,7 +81,7 @@
     [JoinButton setEnabled:YES];
     [CreateButton setEnabled:YES];
     NSError *error;
-    client = [[CollabrifyClient alloc] initWithGmail:@""
+    client = [[CollabrifyClient alloc] initWithGmail:@"jessupjn@umich.edu"
                                          displayName:[userName text]
                                         accountGmail:@"441fall2013@umich.edu"
                                          accessToken:@"XY3721425NoScOpE"

@@ -33,7 +33,7 @@
   }
   
   // Set up the cell...
-  NSLog(@"%@", [currentUsers[indexPath.row] displayName]);
+  [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
   [[cell textLabel] setText: [currentUsers[indexPath.row] displayName]];
   [[cell textLabel] setTextAlignment:NSTextAlignmentCenter];
   return cell;
@@ -54,15 +54,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-  sessionID = [NSString stringWithFormat:@"Session ID: %lli", [client currentSessionID]];
-  [[self navigationItem] setPrompt:sessionID];
   [usersToggle setTitle:@"Show Users"];
-  [listUsers.layer setBorderWidth:1];
-  
-  [self performSelector:@selector(reloadTable)];
-  [noteData setDelegate:(id)self];
-  [self buildButtons];
-  
   [noteData setFrame:CGRectMake(0, 94, 320, 474)];
   [noteData setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
   
@@ -73,17 +65,41 @@
   [listUsers setCenter:[showUsersBackground center]];
   [[self view] addSubview:showUsersBackground];
   [[self view] addSubview:listUsers];
-  [listUsers setDelegate:(id)self];
-  [listUsers setDataSource:(id)self];
-  NSLog(@"---------------------");
-  NSLog(@"%lu", (unsigned long)[client currentSessionParticipantCount]);
-  NSLog(@"%@", [client currentSessionParticipants]);
-  NSLog(@"---------------------");
-
+  
+  [listUsers.layer setBorderWidth:1];
   [noteData.layer setBorderWidth:1];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notepadSizeUp:) name:UIKeyboardWillHideNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notepadSizeDown:) name:UIKeyboardDidShowNotification object:nil];
+  [listUsers setDelegate:self];
+  [listUsers setDataSource:self];
+  [client setDelegate:self];
+  [client setDataSource:self];
+  [noteData setDelegate:self];
+  
+  placeHolder = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+  [placeHolder setText:@" Begin typing here..."];
+  [placeHolder setTextColor:[UIColor lightGrayColor]];
+  [noteData addSubview:placeHolder];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+  if( [noteData hasText]) [placeHolder setHidden:YES];
+  else [placeHolder setHidden:NO];
+  
+  [[self navigationItem] setPrompt:[NSString stringWithFormat:@"Session ID: %lli", [client currentSessionID]]];
+  [self buildButtons];
+  [self reloadTable];
+  keepCount = 0;
+  participantsTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
+                                                       target:self
+                                                     selector:@selector(onTheClock)
+                                                     userInfo:nil
+                                                      repeats:YES];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                 initWithTarget:self
+                                 action:@selector(doneButton)];
+  [[self view] addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -100,13 +116,12 @@
     else NSLog(@"ERROR: %@", error);
   }];
   [noteData resignFirstResponder];
-
 }
 
 -(IBAction) showUsers:(id) sender{
   [noteData resignFirstResponder];
   if([[usersToggle title] isEqualToString:@"Show Users"]){
-    [self performSelector:@selector(reloadTable)];
+    [self reloadTable];
 
     [[self navigationItem] setTitle:iPadUsersTitle];
     [UIView animateWithDuration:0.3 animations:^(void){
@@ -125,22 +140,32 @@
   }
 }
 
--(void) reloadTable{
+
+- (void) onTheClock{
   
-  dispatch_async( dispatch_get_main_queue(), ^{
-    // Add code here to update the UI/send notifications based on the
-    // results of the background processing
-    currentUsers = [client currentSessionParticipants];
-    numUsers = [client currentSessionParticipantCount];
-    
-    NSLog(@"%@ users currently in chat", currentUsers);
-    if (numUsers <= 1)
-      iPadUsersTitle = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d User", numUsers]];
-    else
-      iPadUsersTitle = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d Users", numUsers]];
-    [listUsers reloadData];
-  });
+  if ( keepCount++ == 12 ) [self reloadTable], keepCount=0;
+  
+  if ( numUsers == 1 ) {
+//    NSData* data=[[noteData text] dataUsingEncoding:NSUTF8StringEncoding];
+//    [client broadcast:data eventType:@"update"];
+  }
+  else;
+  
+  
 }
+
+- (void) reloadTable{
+  currentUsers = [client currentSessionParticipants];
+  numUsers = [client currentSessionParticipantCount];
+  
+  [currentUsers sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+  if (numUsers == 1)
+    iPadUsersTitle = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d User", numUsers]];
+  else
+    iPadUsersTitle = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d Users", numUsers]];
+  [listUsers reloadData];
+}
+
 
 //                    KEYBOARD MOVEMENTS/LOGISTICS
 // ---------------------------------------------------------------
@@ -178,17 +203,25 @@
   NSArray *items = [NSArray arrayWithObjects:undoItem, flexItem, doneItem, flexItem2, redoItem, nil];
   [keyboardbuttons setItems:items animated:YES];
 }
+-(void)undoButton{
+  [noteData.undoManager undo];
+}
 -(void)doneButton{
   [noteData resignFirstResponder];
+}
+-(void)redoButton{
+  [noteData.undoManager redo];
 }
 - (void)notepadSizeDown:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
   [noteData setFrame:CGRectMake(0, 0, noteData.frame.size.width, noteData.frame.size.height - keyboardHeight)];
+  [listUsers setFrame:CGRectMake(0, 44, listUsers.frame.size.width, listUsers.frame.size.height - keyboardHeight)];
 }
 
 - (void)notepadSizeUp:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
   [noteData setFrame:CGRectMake(0, 0, noteData.frame.size.width, noteData.frame.size.height + keyboardHeight)];
+  [listUsers setFrame:CGRectMake(0, 44, listUsers.frame.size.width, listUsers.frame.size.height + keyboardHeight)];
 }
 // ---------------------------------------------------------------
 // ---------------------------------------------------------------

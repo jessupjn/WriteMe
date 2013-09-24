@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Constant.h"
 #import <Collabrify/Collabrify.h>
 
 @interface iPadChat : UIViewController{
   
 
-  IBOutlet UITableView *listUsers;
+  UITableView *userList;
   IBOutlet UITextView *noteData;
   IBOutlet UIView *contentView;
   IBOutlet UINavigationBar *iPadUsersBar;
@@ -20,18 +21,25 @@
   UIToolbar *keyboardbuttons;
   NSString *iPadUsersTitle;
 
-
+  NSUndoManager *undoManager;
+  
   CollabrifyClient *client;
 
   NSUInteger numUsers;
   NSArray *currentUsers;
-
+  
+  NSTimer *participantsTimer;
+  int keepCount;
+  NSString *addedString;
+  
+  IBOutlet UILabel *placeHolder;
+  
 }
 
+@property (nonatomic,retain) NSUndoManager *undoManager;
 @property (nonatomic, retain)  CollabrifyClient *client;
 @property (nonatomic, retain)  UITableView *listUsers;
 
--(IBAction)reloadButton:(id)sender;
 -(void) reloadTable;
 
 @end

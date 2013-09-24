@@ -10,20 +10,24 @@
 #import <Collabrify/Collabrify.h>
 
 @interface chat : UIViewController <CollabrifyClientDelegate, CollabrifyClientDataSource, UITableViewDelegate, UITableViewDataSource>{
+  
   IBOutlet UIBarButtonItem *usersToggle;
-  UIView *showUsersBackground;
   UITableView *listUsers;
   IBOutlet UITextView *noteData;
   IBOutlet UIView *contentView;
   UIToolbar *keyboardbuttons;
-  NSString *iPadUsersTitle;
-
+  NSString *iPadUsersTitle;  
+  UIView *showUsersBackground;
   
   CollabrifyClient *client;
   
   NSUInteger numUsers;
   NSArray *currentUsers;
-  NSString *sessionID;
+  
+  NSTimer *participantsTimer;
+  int keepCount;
+  
+  IBOutlet UILabel *placeHolder;
 
 }
 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "createSession.h"
 #import "joinSession.h"
+#import "Constant.h"
 
 @interface TitleScreen : UIViewController {
   

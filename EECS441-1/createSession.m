@@ -153,6 +153,7 @@
                                 [self performSegueWithIdentifier:@"createTheSession" sender:self];
                                }
                                else{
+                                 NSLog(@"THIS IS THE ERROR");
                                  NSLog(@"%@", error);
                                  [wholeScreen setHidden:YES];
                                  [visableObj setHidden:YES];

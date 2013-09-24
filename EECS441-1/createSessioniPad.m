@@ -119,7 +119,7 @@
   }
   else{
     NSArray *tags = [[NSArray alloc] initWithObjects:@"Some Tags", nil];
-    [client createSessionWithBaseFileWithName:[sessionName text]
+    [client createSessionWithName:[sessionName text]
                                          tags:tags
                                      password:[password text]
                                   startPaused:NO
@@ -130,6 +130,7 @@
                                 [self performSegueWithIdentifier:@"createTheSession" sender:self];
                               }
                               else{
+                                NSLog(@"THIS IS THE ERROR");
                                 NSLog(@"%@", error);
                                 [wholeScreen setHidden:YES];
                                 [visableObj setHidden:YES];

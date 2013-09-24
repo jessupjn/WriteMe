@@ -15,7 +15,19 @@
 @implementation iPadChat
 
 @synthesize client;
-@synthesize listUsers;
+@synthesize undoManager;
+
+- (void)client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistationID eventType:(NSString *)eventType data:(NSData *)data
+{
+  NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+  if (string)
+  {
+    dispatch_async(dispatch_get_main_queue(),^{
+      [noteData setText:string];
+    });
+  }
+}
+
 
 //    TableView (populated with users)
 //------------------------------------------------------
@@ -33,6 +45,7 @@
   }
   
   // Set up the cell...
+  [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
   [[cell textLabel] setText: [currentUsers[indexPath.row] displayName]];
   [[cell textLabel] setTextAlignment:NSTextAlignmentCenter];
   return cell;
@@ -56,26 +69,49 @@
 {
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
-  [listUsers.layer setBorderWidth:1];
+  
   [iPadUsersBar.layer setBorderWidth:1];
   [noteData.layer setBorderWidth:1];
   
-  [self performSelector:@selector(reloadTable)];
   [noteData setDelegate:self];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notepadSizeUp:) name:UIKeyboardWillHideNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notepadSizeDown:) name:UIKeyboardDidShowNotification object:nil];
-  [listUsers setDelegate:self];
-  [listUsers setDataSource:self];
-  [client setDelegate:self];
-  [client setDataSource:self];
+  [client setDelegate:self], [client setDataSource:self];
+  
+  undoManager = [noteData undoManager];
+  
+  userList = [[UITableView alloc] initWithFrame:CGRectMake(DEVICEWIDTH-225, 138, 225, 886)];
+  [userList.layer setBorderWidth:1];
+  [userList setDataSource:self], [userList setDelegate:self];
+  [self.view addSubview:userList];
+  
+  placeHolder = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+  [placeHolder setText:@" Begin typing here..."];
+  [placeHolder setTextColor:[UIColor lightGrayColor]];
+  [noteData addSubview:placeHolder];
 
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+  if( [[noteData text] isEqualToString:@""]){
+    if( [noteData hasText]) [placeHolder setHidden:YES];
+    else [placeHolder setHidden:NO];
+  }
+    
   [[self navigationItem] setPrompt:[NSString stringWithFormat:@"Session ID: %lli", [client currentSessionID]]];
   [self buildButtons];
   [self reloadTable];
+  keepCount = 0;
+  participantsTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
+                                                       target:self
+                                                     selector:@selector(onTheClock)
+                                                     userInfo:nil
+                                                      repeats:YES];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                 initWithTarget:self
+                                 action:@selector(doneButton)];
+  [[self view] addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -93,26 +129,33 @@
   }];
 }
 
--(IBAction)reloadButton:(id)sender{
-  NSLog(@"ID: %llu", [client currentSessionID]);
-  [client broadcast:@"hi guys" eventType:@"update"];
-  [self reloadTable];
-}
--(void) reloadTable{
+
+- (void) onTheClock{
   
-    // Add code here to update the UI/send notifications based on the
-    // results of the background processing
+  if ( keepCount++ == 12 ) [self reloadTable], keepCount=0;
+  
+  if ( numUsers == 1 ) {
+    NSData* data=[[noteData text] dataUsingEncoding:NSUTF8StringEncoding];
+//    [client broadcast:data eventType:@"update"];
+  }
+  else if ( [addedString length] > 5 ){
+    
+  }
+  
+}
+
+
+- (void) reloadTable{  
     currentUsers = [client currentSessionParticipants];
     numUsers = [client currentSessionParticipantCount];
-    
-    NSLog(@"%@", currentUsers);
-    
+  
     if (numUsers == 1)
       iPadUsersTitle = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d User", numUsers]];
     else
       iPadUsersTitle = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d Users", numUsers]];
     [iPadBar setTitle:iPadUsersTitle];
-    [listUsers reloadData];
+    [userList reloadData];
+
 }
 
 //                    KEYBOARD MOVEMENTS/LOGISTICS
@@ -132,7 +175,7 @@
   UIBarButtonItem *undoItem = [[UIBarButtonItem alloc] initWithTitle:@"Undo"
                                                                style:UIBarButtonItemStyleBordered
                                                               target:self
-                                                              action:nil];
+                                                              action:@selector(undoButton)];
   UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                             target:nil
                                                                             action:nil];
@@ -146,32 +189,44 @@
   UIBarButtonItem *redoItem = [[UIBarButtonItem alloc] initWithTitle:@"Redo"
                                                                style:UIBarButtonItemStyleBordered
                                                               target:self
-                                                              action:nil];
+                                                              action:@selector(redoButton)];
   
   NSArray *items = [NSArray arrayWithObjects:undoItem, flexItem, doneItem, flexItem2, redoItem, nil];
   [keyboardbuttons setItems:items animated:YES];
 }
+-(void)undoButton{
+  [noteData.undoManager undo];
+}
 -(void)doneButton{
-  NSLog(@"HERE");
   [noteData resignFirstResponder];
-  NSLog(@"DONE");
+}
+-(void)redoButton{
+  [noteData.undoManager redo];
 }
 - (void)notepadSizeDown:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
-  NSLog(@"%i", keyboardHeight);
   [noteData setFrame:CGRectMake(0, 0, noteData.frame.size.width, noteData.frame.size.height - keyboardHeight)];
-  [listUsers setFrame:CGRectMake(0, 44, listUsers.frame.size.width, listUsers.frame.size.height - keyboardHeight)];
+  [userList setFrame:CGRectMake(DEVICEWIDTH-225, 138, userList.frame.size.width, userList.frame.size.height - keyboardHeight)];
 }
 
 - (void)notepadSizeUp:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
-  NSLog(@"%f",noteData.frame.size.height);
   [noteData setFrame:CGRectMake(0, 0, noteData.frame.size.width, noteData.frame.size.height + keyboardHeight)];
-  [listUsers setFrame:CGRectMake(0, 44, listUsers.frame.size.width, listUsers.frame.size.height + keyboardHeight)];
-  NSLog(@"%f",noteData.frame.size.height);
+  [userList setFrame:CGRectMake(DEVICEWIDTH-225, 138, userList.frame.size.width, userList.frame.size.height + keyboardHeight)];
 }
 // ---------------------------------------------------------------
 // ---------------------------------------------------------------
+
+-(void) textViewDidChange:(UITextView *)textView{
+  
+  if( [noteData hasText] ) [placeHolder setHidden:YES];
+  else [placeHolder setHidden:NO];
+  
+  NSUInteger cursorPosition = textView.selectedRange.location;
+  NSLog(@"%i", cursorPosition);
+
+}
+
 
 
 @end
