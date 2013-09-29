@@ -19,13 +19,40 @@
 
 - (void)client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistationID eventType:(NSString *)eventType data:(NSData *)data
 {
-  NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-  if (string)
-  {
+  chalkBoard *newEvent = new chalkBoard;
+  newEvent->ParseFromArray([data bytes], [data length]);
+  std::string string = newEvent->changes();
+  NSString *objcString = [NSString stringWithCString:string.c_str() encoding:[NSString defaultCStringEncoding]];
+  int loc = newEvent->where();
+  
+  if ( loc > [noteData.text length] ) loc = [noteData.text length] - 1;
+  if ( ![list count] || [[list objectAtIndex:0] intValue] != submissionRegistationID ) {
     dispatch_async(dispatch_get_main_queue(),^{
-      [noteData setText:string];
+      
+      // delete key was pressed.
+      if ( [objcString isEqualToString:@"backPressed"] ) {
+        NSLog(@"Delete Was Pressed");
+        
+        return;
+      }
+      // another key was pressed
+      else {
+        [noteData setScrollEnabled:NO];
+        NSLog(@"%i %@", loc, objcString);
+        NSString *firstHalf = [noteData.text substringToIndex:loc];
+        NSString *secondHalf = [noteData.text substringFromIndex:loc];
+        [noteData setText:[NSString stringWithFormat:@"%@%@%@", firstHalf, objcString, secondHalf]];
+        [noteData setScrollEnabled:YES];
+        return;
+      }
     });
   }
+  else {
+    [list removeObjectAtIndex:0];
+    NSLog(@"Detected your event");
+    return;
+  }
+  
 }
 
 
@@ -90,7 +117,19 @@
   [placeHolder setText:@" Begin typing here..."];
   [placeHolder setTextColor:[UIColor lightGrayColor]];
   [noteData addSubview:placeHolder];
-
+  if( [noteData hasText]) [placeHolder setHidden:YES];
+  else [placeHolder setHidden:NO];
+  
+  addedString = [[NSMutableString alloc] init];
+  keepCount = formerSize = 0;
+  
+  participantsTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
+                                                       target:self
+                                                     selector:@selector(onTheClock)
+                                                     userInfo:nil
+                                                      repeats:YES];
+  theEvent = new chalkBoard;
+  list = [[NSMutableArray alloc] init];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -102,16 +141,16 @@
   [[self navigationItem] setPrompt:[NSString stringWithFormat:@"Session ID: %lli", [client currentSessionID]]];
   [self buildButtons];
   [self reloadTable];
-  keepCount = 0;
-  participantsTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
-                                                       target:self
-                                                     selector:@selector(onTheClock)
-                                                     userInfo:nil
-                                                      repeats:YES];
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                  initWithTarget:self
                                  action:@selector(doneButton)];
   [[self view] addGestureRecognizer:tap];
+  
+  [noteData.undoManager setGroupsByEvent:NO];
+  [noteData.undoManager beginUndoGrouping];
+  [noteData.undoManager endUndoGrouping];
+  [noteData.undoManager beginUndoGrouping];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -120,7 +159,9 @@
   // Dispose of any resources that can be recreated.
 }
 
+// when view is going to disappear.
 -(void) viewWillDisappear:(BOOL)animated{
+  [participantsTimer invalidate];
   [client leaveAndDeleteSession:YES completionHandler:^(BOOL success, CollabrifyError *error) {
     if(success){
       NSLog(@"Was it a success??     %hhd", success);
@@ -129,22 +170,17 @@
   }];
 }
 
-
+// function called by the timer
 - (void) onTheClock{
   
   if ( keepCount++ == 12 ) [self reloadTable], keepCount=0;
   
-  if ( numUsers == 1 ) {
-    NSData* data=[[noteData text] dataUsingEncoding:NSUTF8StringEncoding];
-//    [client broadcast:data eventType:@"update"];
-  }
-  else if ( [addedString length] > 5 ){
-    
-  }
-  
+//  NSData* data;
+//  if ( numUsers == 1 ) [client broadcast:data eventType:@"update"];
+
 }
 
-
+// loads names into the table of participants and sets bar title.
 - (void) reloadTable{  
     currentUsers = [client currentSessionParticipants];
     numUsers = [client currentSessionParticipantCount];
@@ -158,18 +194,19 @@
 
 }
 
-//                    KEYBOARD MOVEMENTS/LOGISTICS
-// ---------------------------------------------------------------
+// --------------------------------------------------------------- //
+// -                  KEYBOARD MOVEMENTS/LOGISTICS               - //
+// --------------------------------------------------------------- //
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView {
   textView.inputAccessoryView = keyboardbuttons;
   return YES;
 }
 - (void)buildButtons{
   keyboardbuttons = [[UIToolbar alloc] init];
-  keyboardbuttons.barStyle = UIBarStyleDefault;
+  [keyboardbuttons setBarStyle:UIBarStyleDefault];
   [keyboardbuttons sizeToFit];
   
-  keyboardbuttons.frame = CGRectMake(0,self.view.frame.size.height - 44, self.view.frame.size.width, 44);
+  keyboardbuttons.frame = CGRectMake(0, DEVICEHEIGHT-44, DEVICEWIDTH, 44);
   
   //Use this to put space in between your toolbox buttons
   UIBarButtonItem *undoItem = [[UIBarButtonItem alloc] initWithTitle:@"Undo"
@@ -194,37 +231,73 @@
   NSArray *items = [NSArray arrayWithObjects:undoItem, flexItem, doneItem, flexItem2, redoItem, nil];
   [keyboardbuttons setItems:items animated:YES];
 }
+// undo button
 -(void)undoButton{
-  [noteData.undoManager undo];
+  if( [noteData.undoManager canUndo] )
+    [noteData.undoManager endUndoGrouping], [noteData.undoManager undoNestedGroup];
+  else NSLog(@"CANT UNDO");
 }
+// done button
 -(void)doneButton{
   [noteData resignFirstResponder];
 }
+// redo button
 -(void)redoButton{
-  [noteData.undoManager redo];
+  if( [noteData.undoManager canRedo] && ![noteData.undoManager isUndoing] )
+    [noteData.undoManager endUndoGrouping], [noteData.undoManager redo];
+  else NSLog(@"CANT REDO");
 }
+// shrinking the boxes when the keyboard comes up.
 - (void)notepadSizeDown:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
   [noteData setFrame:CGRectMake(0, 0, noteData.frame.size.width, noteData.frame.size.height - keyboardHeight)];
   [userList setFrame:CGRectMake(DEVICEWIDTH-225, 138, userList.frame.size.width, userList.frame.size.height - keyboardHeight)];
 }
-
+// re-expanding the boxes when the keyboard will go down
 - (void)notepadSizeUp:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
   [noteData setFrame:CGRectMake(0, 0, noteData.frame.size.width, noteData.frame.size.height + keyboardHeight)];
   [userList setFrame:CGRectMake(DEVICEWIDTH-225, 138, userList.frame.size.width, userList.frame.size.height + keyboardHeight)];
 }
-// ---------------------------------------------------------------
-// ---------------------------------------------------------------
+// --------------------------------------------------------------- //
+// --------------------------------------------------------------- //
 
+
+
+
+// --------------------------------------------------------------- //
+// -                    KEEP TRACK OF CHANGES                    - //
+// --------------------------------------------------------------- //
 -(void) textViewDidChange:(UITextView *)textView{
   
+  // Defines when the placeholder is to be displayed.
   if( [noteData hasText] ) [placeHolder setHidden:YES];
   else [placeHolder setHidden:NO];
   
+  if ( [noteData.text length]%10 == 0 ) [noteData.undoManager beginUndoGrouping];
+  
+  
+  // current position of the cursor
   NSUInteger cursorPosition = textView.selectedRange.location;
-  NSLog(@"%i", cursorPosition);
-
+  // Defines the start position of the string to be added into the DATA!
+  
+  // Defines the string to be added to the text of all users
+  NSData* data;
+  NSRange range = NSMakeRange(cursorPosition-1, 1);
+  addedString = [NSMutableString stringWithString:[noteData.text substringWithRange:range]];
+  
+  // delete key was pressed
+  if ( formerSize > [noteData.text length] )
+    addedString = [NSMutableString stringWithFormat:@"backPressed"];
+  
+  theEvent->set_changes( [addedString UTF8String] );
+  theEvent->set_where( noteData.selectedRange.location - 1);
+  
+  std::string dataData = theEvent->SerializeAsString();
+  data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
+  int eventId = [client broadcast:data eventType:@"update"];
+  [list addObject:[NSString stringWithFormat:@"%i", eventId]];
+  formerSize = [noteData.text length];
 }
 
 

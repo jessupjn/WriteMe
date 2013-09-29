@@ -33,6 +33,7 @@
 //  Sanjay Ghemawat, Jeff Dean, and others.
 
 #include <istream>
+#include <iostream>
 #include <stack>
 #include <google/protobuf/stubs/hash.h>
 

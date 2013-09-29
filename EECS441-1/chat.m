@@ -77,7 +77,7 @@
   [client setDataSource:self];
   [noteData setDelegate:self];
   
-  placeHolder = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+  placeHolder = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
   [placeHolder setText:@" Begin typing here..."];
   [placeHolder setTextColor:[UIColor lightGrayColor]];
   [noteData addSubview:placeHolder];
@@ -91,7 +91,7 @@
   [self buildButtons];
   [self reloadTable];
   keepCount = 0;
-  participantsTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
+  participantsTimer = [NSTimer scheduledTimerWithTimeInterval:0.20
                                                        target:self
                                                      selector:@selector(onTheClock)
                                                      userInfo:nil
@@ -158,7 +158,6 @@
   currentUsers = [client currentSessionParticipants];
   numUsers = [client currentSessionParticipantCount];
   
-  [currentUsers sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
   if (numUsers == 1)
     iPadUsersTitle = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d User", numUsers]];
   else
@@ -215,13 +214,12 @@
 - (void)notepadSizeDown:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
   [noteData setFrame:CGRectMake(0, 0, noteData.frame.size.width, noteData.frame.size.height - keyboardHeight)];
-  [listUsers setFrame:CGRectMake(0, 44, listUsers.frame.size.width, listUsers.frame.size.height - keyboardHeight)];
+  [listUsers setFrame:CGRectMake(listUsers.frame.origin.x, listUsers.frame.origin.y, listUsers.frame.size.width, listUsers.frame.size.height - keyboardHeight)];
 }
-
 - (void)notepadSizeUp:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
   [noteData setFrame:CGRectMake(0, 0, noteData.frame.size.width, noteData.frame.size.height + keyboardHeight)];
-  [listUsers setFrame:CGRectMake(0, 44, listUsers.frame.size.width, listUsers.frame.size.height + keyboardHeight)];
+  [listUsers setFrame:CGRectMake(listUsers.frame.origin.x, listUsers.frame.origin.y, listUsers.frame.size.width, listUsers.frame.size.height + keyboardHeight)];
 }
 // ---------------------------------------------------------------
 // ---------------------------------------------------------------

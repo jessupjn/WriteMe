@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Constant.h"
 #import <Collabrify/Collabrify.h>
+#import "eventKind.pb.h"
 
 @interface iPadChat : UIViewController{
   
@@ -29,10 +30,13 @@
   NSArray *currentUsers;
   
   NSTimer *participantsTimer;
-  int keepCount;
-  NSString *addedString;
+  int keepCount, formerCursorPos, startPos, formerSize;
+  NSMutableString *addedString;
+  NSMutableArray *list;
   
-  IBOutlet UILabel *placeHolder;
+  UILabel *placeHolder;
+  
+  chalkBoard *theEvent;
   
 }
 

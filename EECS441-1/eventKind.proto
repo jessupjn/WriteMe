@@ -1,0 +1,7 @@
+message chalkBoard {
+	// the changes that are being submitted.
+	optional string changes = 1 [default = ""];
+
+	// the location the text is to be added.
+	optional int32 where = 2 [default = 0];
+}

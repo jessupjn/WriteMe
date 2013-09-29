@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040B8AAC17F34E23006E60BC /* showUsers.png in Resources */ = {isa = PBXBuildFile; fileRef = 040B8AAB17F34E23006E60BC /* showUsers.png */; };
+		040B8AAF17F3505E006E60BC /* hideUsers.png in Resources */ = {isa = PBXBuildFile; fileRef = 040B8AAE17F3505E006E60BC /* hideUsers.png */; };
+		040B8AB217F4099B006E60BC /* Notepad-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 040B8AB117F4099B006E60BC /* Notepad-icon.png */; };
+		041893C017F4A225006C0FB2 /* eventKind.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041893BE17F4A225006C0FB2 /* eventKind.pb.cc */; };
+		041893C217F4A275006C0FB2 /* eventKind.proto in Resources */ = {isa = PBXBuildFile; fileRef = 041893C117F4A275006C0FB2 /* eventKind.proto */; };
 		0467E64A17DABF8A00F8AE10 /* TitleScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467E64917DABF8A00F8AE10 /* TitleScreen.m */; };
 		0467E64C17DAC20D00F8AE10 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0467E64B17DAC20D00F8AE10 /* QuartzCore.framework */; };
 		0467E65017DD606900F8AE10 /* helpScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467E64F17DD606900F8AE10 /* helpScreen.m */; };
@@ -16,9 +21,8 @@
 		04825B2217DFE2C5001518C0 /* createSessioniPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 04825B2117DFE2C5001518C0 /* createSessioniPad.m */; };
 		04825B2517DFE829001518C0 /* joinSessioniPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 04825B2417DFE829001518C0 /* joinSessioniPad.m */; };
 		048FC33817F13FED005540B9 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 048FC33717F13FED005540B9 /* libstdc++.dylib */; };
-		048FC33B17F14134005540B9 /* protocol.mm in Sources */ = {isa = PBXBuildFile; fileRef = 048FC33917F14134005540B9 /* protocol.mm */; };
 		0493F2F217DF7B9C00CB4621 /* joinSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0493F2F117DF7B9C00CB4621 /* joinSession.m */; };
-		04AB37AB17E268FF00E53C9D /* iPadChat.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AB37AA17E268FF00E53C9D /* iPadChat.m */; };
+		04AB37AB17E268FF00E53C9D /* iPadChat.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04AB37AA17E268FF00E53C9D /* iPadChat.mm */; };
 		04E4274817DA53940081D40A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E4274717DA53940081D40A /* Foundation.framework */; };
 		04E4274A17DA53940081D40A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E4274917DA53940081D40A /* CoreGraphics.framework */; };
 		04E4274C17DA53940081D40A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E4274B17DA53940081D40A /* UIKit.framework */; };
@@ -82,6 +86,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040B8AAB17F34E23006E60BC /* showUsers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = showUsers.png; sourceTree = "<group>"; };
+		040B8AAE17F3505E006E60BC /* hideUsers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hideUsers.png; sourceTree = "<group>"; };
+		040B8AB117F4099B006E60BC /* Notepad-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Notepad-icon.png"; sourceTree = "<group>"; };
+		041893BE17F4A225006C0FB2 /* eventKind.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = eventKind.pb.cc; sourceTree = "<group>"; };
+		041893BF17F4A225006C0FB2 /* eventKind.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eventKind.pb.h; sourceTree = "<group>"; };
+		041893C117F4A275006C0FB2 /* eventKind.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eventKind.proto; sourceTree = "<group>"; };
 		0467E64817DABF8900F8AE10 /* TitleScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleScreen.h; sourceTree = "<group>"; };
 		0467E64917DABF8A00F8AE10 /* TitleScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleScreen.m; sourceTree = "<group>"; };
 		0467E64B17DAC20D00F8AE10 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -97,13 +107,11 @@
 		04825B2317DFE829001518C0 /* joinSessioniPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = joinSessioniPad.h; sourceTree = "<group>"; };
 		04825B2417DFE829001518C0 /* joinSessioniPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = joinSessioniPad.m; sourceTree = "<group>"; };
 		048FC33717F13FED005540B9 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
-		048FC33917F14134005540B9 /* protocol.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = protocol.mm; sourceTree = "<group>"; };
-		048FC33A17F14134005540B9 /* protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol.h; sourceTree = "<group>"; };
 		048FC33C17F1E578005540B9 /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		0493F2F017DF7B9C00CB4621 /* joinSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = joinSession.h; sourceTree = "<group>"; };
 		0493F2F117DF7B9C00CB4621 /* joinSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = joinSession.m; sourceTree = "<group>"; };
 		04AB37A917E268FF00E53C9D /* iPadChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPadChat.h; path = ../iPadChat.h; sourceTree = "<group>"; };
-		04AB37AA17E268FF00E53C9D /* iPadChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPadChat.m; path = ../iPadChat.m; sourceTree = "<group>"; };
+		04AB37AA17E268FF00E53C9D /* iPadChat.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iPadChat.mm; path = ../iPadChat.mm; sourceTree = "<group>"; };
 		04E4274417DA53940081D40A /* EECS441-1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EECS441-1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E4274717DA53940081D40A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04E4274917DA53940081D40A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -239,13 +247,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0467E64D17DD5AB200F8AE10 /* View Controllers */ = {
+		040B8AAA17F2B17F006E60BC /* Google Protocol Stuff */ = {
+			isa = PBXGroup;
+			children = (
+				041893C117F4A275006C0FB2 /* eventKind.proto */,
+				041893BE17F4A225006C0FB2 /* eventKind.pb.cc */,
+				041893BF17F4A225006C0FB2 /* eventKind.pb.h */,
+			);
+			name = "Google Protocol Stuff";
+			sourceTree = "<group>";
+		};
+		040B8AAD17F34E26006E60BC /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				040B8AB117F4099B006E60BC /* Notepad-icon.png */,
+				040B8AAE17F3505E006E60BC /* hideUsers.png */,
+				040B8AAB17F34E23006E60BC /* showUsers.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		040B8AB017F351F8006E60BC /* Shared */ = {
 			isa = PBXGroup;
 			children = (
 				0467E64817DABF8900F8AE10 /* TitleScreen.h */,
 				0467E64917DABF8A00F8AE10 /* TitleScreen.m */,
 				0467E64E17DD606900F8AE10 /* helpScreen.h */,
 				0467E64F17DD606900F8AE10 /* helpScreen.m */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		0467E64D17DD5AB200F8AE10 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
 				0467E65117DD6E8500F8AE10 /* createSession.h */,
 				0467E65217DD6E8500F8AE10 /* createSession.m */,
 				0493F2F017DF7B9C00CB4621 /* joinSession.h */,
@@ -253,7 +288,7 @@
 				0467E65717DEA95900F8AE10 /* chat.h */,
 				0467E65817DEA95900F8AE10 /* chat.m */,
 			);
-			name = "View Controllers";
+			name = iPhone;
 			sourceTree = "<group>";
 		};
 		04825B1C17DFBE41001518C0 /* iPad */ = {
@@ -264,7 +299,7 @@
 				04825B2017DFE2C5001518C0 /* createSessioniPad.h */,
 				04825B2117DFE2C5001518C0 /* createSessioniPad.m */,
 				04AB37A917E268FF00E53C9D /* iPadChat.h */,
-				04AB37AA17E268FF00E53C9D /* iPadChat.m */,
+				04AB37AA17E268FF00E53C9D /* iPadChat.mm */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -272,8 +307,6 @@
 		04E4273B17DA53940081D40A = {
 			isa = PBXGroup;
 			children = (
-				048FC33917F14134005540B9 /* protocol.mm */,
-				048FC33A17F14134005540B9 /* protocol.h */,
 				04E4274D17DA53940081D40A /* EECS441-1 */,
 				04E4276C17DA53950081D40A /* EECS441-1Tests */,
 				04E4274617DA53940081D40A /* Frameworks */,
@@ -314,11 +347,14 @@
 				04E4275617DA53940081D40A /* AppDelegate.h */,
 				04E4275717DA53940081D40A /* AppDelegate.m */,
 				048FC33C17F1E578005540B9 /* Constant.h */,
+				040B8AAA17F2B17F006E60BC /* Google Protocol Stuff */,
+				040B8AB017F351F8006E60BC /* Shared */,
 				04825B1C17DFBE41001518C0 /* iPad */,
-				0467E64D17DD5AB200F8AE10 /* View Controllers */,
+				0467E64D17DD5AB200F8AE10 /* iPhone */,
 				04E4275917DA53940081D40A /* Main-iPhone.storyboard */,
 				04825B1D17DFBE83001518C0 /* Main-iPad.storyboard */,
 				04E4275F17DA53940081D40A /* Images.xcassets */,
+				040B8AAD17F34E26006E60BC /* Images */,
 				04E4274E17DA53940081D40A /* Supporting Files */,
 			);
 			path = "EECS441-1";
@@ -558,8 +594,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				041893C217F4A275006C0FB2 /* eventKind.proto in Resources */,
 				04E4277E17DA53E10081D40A /* Collabrify.bundle in Resources */,
+				040B8AAF17F3505E006E60BC /* hideUsers.png in Resources */,
+				040B8AAC17F34E23006E60BC /* showUsers.png in Resources */,
 				04E4276017DA53940081D40A /* Images.xcassets in Resources */,
+				040B8AB217F4099B006E60BC /* Notepad-icon.png in Resources */,
 				04825B1F17DFBE83001518C0 /* Main-iPad.storyboard in Resources */,
 				04E4275217DA53940081D40A /* InfoPlist.strings in Resources */,
 				04E4275B17DA53940081D40A /* Main-iPhone.storyboard in Resources */,
@@ -581,6 +621,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				041893C017F4A225006C0FB2 /* eventKind.pb.cc in Sources */,
 				04E427E817DA56390081D40A /* message_lite.cc in Sources */,
 				04E427E917DA56390081D40A /* reflection_ops.cc in Sources */,
 				04E427F117DA56390081D40A /* structurally_valid.cc in Sources */,
@@ -592,11 +633,10 @@
 				04E427E717DA56390081D40A /* message.cc in Sources */,
 				04E427E517DA56390081D40A /* zero_copy_stream_impl.cc in Sources */,
 				0467E65317DD6E8500F8AE10 /* createSession.m in Sources */,
-				048FC33B17F14134005540B9 /* protocol.mm in Sources */,
 				04E427F717DA56390081D40A /* unknown_field_set.cc in Sources */,
 				04E427D917DA56390081D40A /* descriptor.cc in Sources */,
 				04E427E217DA56390081D40A /* printer.cc in Sources */,
-				04AB37AB17E268FF00E53C9D /* iPadChat.m in Sources */,
+				04AB37AB17E268FF00E53C9D /* iPadChat.mm in Sources */,
 				04E427F817DA56390081D40A /* wire_format.cc in Sources */,
 				04E427EE17DA56390081D40A /* common.cc in Sources */,
 				04E427EC17DA56390081D40A /* atomicops_internals_x86_gcc.cc in Sources */,
@@ -764,7 +804,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EECS441-1/EECS441-1-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Google Protocol Buffers\"";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Google Protocol Buffers\"/**";
 				INFOPLIST_FILE = "EECS441-1/EECS441-1-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -784,7 +824,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EECS441-1/EECS441-1-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Google Protocol Buffers\"";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Google Protocol Buffers\"/**";
 				INFOPLIST_FILE = "EECS441-1/EECS441-1-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";

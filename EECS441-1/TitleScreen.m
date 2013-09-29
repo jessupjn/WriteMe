@@ -36,8 +36,6 @@
     [newLogo.layer setBorderWidth:2];
     [newLogo.layer setCornerRadius:16];
     
-    
-    
   }
   [logo.layer setBorderWidth:2];
   [logo.layer setCornerRadius:16];

@@ -52,7 +52,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="WriteMe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbr-Yi-iOr">
-                                <rect key="frame" x="85" y="156" width="150" height="50"/>
+                                <rect key="frame" x="85" y="156" width="150" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="29"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -330,7 +330,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Notepad" prompt="prompt" id="9pA-Cp-Jg2">
-                        <barButtonItem key="rightBarButtonItem" title="Users" id="jlx-0h-u4f">
+                        <barButtonItem key="rightBarButtonItem" title="users" id="jlx-0h-u4f">
                             <connections>
                                 <action selector="showUsers:" destination="DeA-7w-eJt" id="vzX-yD-Bri"/>
                             </connections>
