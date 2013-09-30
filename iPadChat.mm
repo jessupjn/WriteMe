@@ -35,8 +35,8 @@
   int loc = newEvent->where();
   
   // if the other users added a letter
-  if ([eventType isEqualToString:@"update"]){
-    if ( ![list count] || ![list containsObject:[NSString stringWithFormat:@"%i", submissionRegistationID]] ) {
+  if ( ![list count] || ![list containsObject:[NSString stringWithFormat:@"%i", submissionRegistationID]] ) {
+    if ([eventType isEqualToString:@"update"]){
       dispatch_async(dispatch_get_main_queue(),^{
         NSLog(@"%i %i %@", loc, submissionRegistationID, objcString);
         if (loc > [noteData.text length]){
@@ -54,29 +54,27 @@
         return;
       });
     }
-    else {
-      [list removeObjectAtIndex:0];
-      NSLog(@"Detected your event");
-      return;
+    // if the other users pressed undo
+    else if ( [eventType isEqualToString:@"undo"] ){
+      NSLog(@"He undid it!");
+      [self undoButton];
+    }
+    // if the other users pressed redo
+    else if ( [eventType isEqualToString:@"redo"] ){
+      NSLog(@"He redid it!");
+      [self redoButton];
+    }
+    // if the other users pressed backspace
+    else if ( [eventType isEqualToString:@"delete"] ){
+      NSLog(@"He backspaced! it!");
+      NSString *firstHalf = [noteData.text substringToIndex:loc+1];
+      NSString *secondHalf = [noteData.text substringFromIndex:loc+2];
+      [noteData setText:[NSString stringWithFormat:@"%@%@", firstHalf, secondHalf]];
     }
   }
-  // if the other users pressed undo
-  else if ( [eventType isEqualToString:@"undo"] ){
-    NSLog(@"He undid it!");
-    [self undoButton];
-  }
-  // if the other users pressed redo
-  else if ( [eventType isEqualToString:@"redo"] ){
-    NSLog(@"He redid it!");
-    [self redoButton];
-  }
-  // if the other users pressed backspace
-  else if ( [eventType isEqualToString:@"delete"] ){
-    NSLog(@"He backspaced! it!");
-    NSLog(@"Delete Was Pressed");
-    NSString *firstHalf = [noteData.text substringToIndex:loc+1];
-    NSString *secondHalf = [noteData.text substringFromIndex:loc+2];
-    [noteData setText:[NSString stringWithFormat:@"%@%@", firstHalf, secondHalf]];
+  else {
+    NSLog(@"Detected your event");
+    return;
   }
 }
 
