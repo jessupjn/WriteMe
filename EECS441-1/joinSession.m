@@ -75,7 +75,7 @@
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
   if([[segue identifier] isEqualToString:@"joinTheSession"]){
-    chat *nextScreen = [segue destinationViewController];
+    iPhoneChat *nextScreen = [segue destinationViewController];
     [nextScreen setClient:client];
     NSLog(@"COPIED");
   }

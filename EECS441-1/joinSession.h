@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Collabrify/Collabrify.h>
-#import "chat.h"
+#import "iPhoneChat.h"
 
 @interface joinSession : UIViewController{
   IBOutlet UIView *infoBackground;
