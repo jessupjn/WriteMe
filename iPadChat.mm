@@ -67,9 +67,8 @@
     // if the other users pressed backspace
     else if ( [eventType isEqualToString:@"delete"] ){
       NSLog(@"He backspaced! it!");
-      NSString *firstHalf = [noteData.text substringToIndex:loc+1];
-      NSString *secondHalf = [noteData.text substringFromIndex:loc+2];
-      [noteData setText:[NSString stringWithFormat:@"%@%@", firstHalf, secondHalf]];
+      NSRange range = NSMakeRange(loc+1, 1);
+      [noteData setText:[noteData.text stringByReplacingCharactersInRange:range withString:@""]];
     }
   }
   else {
@@ -335,12 +334,20 @@
   // if undo was pressed
   else if (didUndo){
     didUndo = FALSE;
+    [addedString setString:noteData.text];
+    theEvent->set_changes( [addedString UTF8String] );
+    std::string dataData = theEvent->SerializeAsString();
+    data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
     eventId = [client broadcast:data eventType:@"undo"];
   }
   
   // if redo was pressed
   else if (didRedo){
     didRedo = FALSE;
+    [addedString setString:noteData.text];
+    theEvent->set_changes( [addedString UTF8String] );
+    std::string dataData = theEvent->SerializeAsString();
+    data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
     eventId = [client broadcast:data eventType:@"redo"];
   }
   

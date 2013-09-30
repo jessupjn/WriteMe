@@ -801,6 +801,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/Jack/Documents/Notes/EECS441/Project1/EECS441-1/**",
+					"\"$(SRCROOT)/\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EECS441-1/EECS441-1-Prefix.pch";
@@ -821,6 +822,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/Jack/Documents/Notes/EECS441/Project1/EECS441-1/**",
+					"\"$(SRCROOT)/\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EECS441-1/EECS441-1-Prefix.pch";
