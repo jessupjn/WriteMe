@@ -110,7 +110,7 @@
 		0493F2F117DF7B9C00CB4621 /* joinSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = joinSession.m; sourceTree = "<group>"; };
 		04AB37A917E268FF00E53C9D /* iPadChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPadChat.h; path = ../iPadChat.h; sourceTree = "<group>"; };
 		04AB37AA17E268FF00E53C9D /* iPadChat.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iPadChat.mm; path = ../iPadChat.mm; sourceTree = "<group>"; };
-		04E4274417DA53940081D40A /* EECS441-1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EECS441-1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		04E4274417DA53940081D40A /* WriteMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WriteMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E4274717DA53940081D40A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04E4274917DA53940081D40A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		04E4274B17DA53940081D40A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -318,7 +318,7 @@
 		04E4274517DA53940081D40A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				04E4274417DA53940081D40A /* EECS441-1.app */,
+				04E4274417DA53940081D40A /* WriteMe.app */,
 				04E4276517DA53950081D40A /* EECS441-1Tests.xctest */,
 			);
 			name = Products;
@@ -536,7 +536,7 @@
 			);
 			name = "EECS441-1";
 			productName = "EECS441-1";
-			productReference = 04E4274417DA53940081D40A /* EECS441-1.app */;
+			productReference = 04E4274417DA53940081D40A /* WriteMe.app */;
 			productType = "com.apple.product-type.application";
 		};
 		04E4276417DA53950081D40A /* EECS441-1Tests */ = {
@@ -808,7 +808,7 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Google Protocol Buffers\"/**";
 				INFOPLIST_FILE = "EECS441-1/EECS441-1-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = WriteMe;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -829,7 +829,7 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Google Protocol Buffers\"/**";
 				INFOPLIST_FILE = "EECS441-1/EECS441-1-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = WriteMe;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

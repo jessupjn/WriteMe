@@ -22,7 +22,6 @@
 @synthesize theEvent;
 
 
-
 // UPDATES THE TEXT IF THE CLIENT DETECTS AN EVENT
 - (void)client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistationID eventType:(NSString *)eventType data:(NSData *)data
 {
@@ -65,8 +64,27 @@
       // if the other users pressed backspace
       else if ( [eventType isEqualToString:@"delete"] ){
         NSLog(@"He backspaced! it!");
-        NSRange range = NSMakeRange(loc+1, 1);
-        [noteData setText:[noteData.text stringByReplacingCharactersInRange:range withString:@""]];
+        loc++;
+        
+        NSRange range = NSMakeRange(loc, 1);
+        if ( [noteData.text length] > loc ){
+          
+          // if the delete call is valid
+          [noteData setText:[noteData.text stringByReplacingCharactersInRange:range withString:@""]];
+          
+        }
+        else{
+          
+          // if they are out of sync and try to delete and we catch it... they will resync
+          // to have the same text.
+          addedString = [NSMutableString stringWithFormat:@"%@", noteData.text];
+          theEvent->set_changes( [addedString UTF8String] );
+          std::string dataData = theEvent->SerializeAsString();
+          NSData *data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
+          int eventId = [self broadcastRedo:data];
+          [list addObject:[NSString stringWithFormat:@"%i", eventId]];
+          
+        }
       }
     }
     else {
@@ -150,8 +168,6 @@
                                                       repeats:YES];
   theEvent = new chalkBoard;
   list = [[NSMutableArray alloc] init];
-  didUndo=FALSE;
-  
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -166,9 +182,7 @@
   
   [noteData.undoManager setGroupsByEvent:NO];
   [noteData.undoManager beginUndoGrouping];
-  [noteData.undoManager endUndoGrouping];
-  [noteData.undoManager beginUndoGrouping];
-  
+  didUndo = didRedo = FALSE;
 }
 
 - (void)didReceiveMemoryWarning
@@ -265,7 +279,7 @@
 // undo button
 -(void)undoButton{
   if( [noteData.undoManager canUndo] ) {
-    didUndo = TRUE;
+    
     if ( didUndo ){
       [noteData.undoManager endUndoGrouping];
       [noteData.undoManager undoNestedGroup];
@@ -277,8 +291,10 @@
       [noteData.undoManager undoNestedGroup];
       [noteData.undoManager beginUndoGrouping];
     }
+    didUndo = TRUE;
+    
   }
-  else NSLog(@"CANT UNDO");
+  else NSLog(@"CANT UNDO"), didUndo=FALSE;
 }
 // done button
 -(void)doneButton{
@@ -286,7 +302,10 @@
 }
 // redo button
 -(void)redoButton{
+  
   if( [noteData.undoManager canRedo] && ![noteData.undoManager isUndoing] ){
+    
+    didRedo = TRUE;
     [noteData.undoManager redo];
     if ([noteData.undoManager canRedo]){
       [noteData.undoManager endUndoGrouping];
@@ -294,7 +313,7 @@
       [noteData.undoManager redo];
     }
   }
-  else NSLog(@"CANT REDO");
+  else NSLog(@"CANT REDO"), didRedo=FALSE;
 }
 - (void)notepadSizeDown:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
@@ -332,8 +351,9 @@
   if ( formerSize > [noteData.text length] )
     addedString = [NSMutableString stringWithFormat:@"backPressed"];
   
-  if (didUndo || didRedo)
+  if (didUndo || didRedo){
     addedString = [NSMutableString stringWithFormat:@"%@", noteData.text];
+  }
   
   theEvent->set_changes( [addedString UTF8String] );
   theEvent->set_where( noteData.selectedRange.location - 1);
@@ -347,27 +367,51 @@
   // if undo was pressed
   if (didUndo){
     didUndo = FALSE;
-    data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
-    eventId = [client broadcast:data eventType:@"undo"];
+    eventId = [self broadcastUndo:data];
   }
   
   // if redo was pressed
   else if (didRedo){
     didRedo = FALSE;
-    data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
-    eventId = [client broadcast:data eventType:@"redo"];
+    eventId = [self broadcastRedo:data];
   }
   
   //backspace key was pressed.
   else if ( [addedString isEqualToString:@"backPressed"] )
-    eventId = [client broadcast:data eventType:@"delete"];
+    eventId = [self broadcastDelete:data];
   
   // adding a letter to the data.
   else
-    eventId = [client broadcast:data eventType:@"update"];
+    eventId = [self broadcastUpdate:data];
   
   // add to list of your events.
   [list addObject:[NSString stringWithFormat:@"%i", eventId]];
 }
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+  if([text isEqualToString:@". "])
+    return NO;
+  return YES;
+}
+
+
+// all the types of broadcasts that we send
+-(int) broadcastUpdate:(NSData *)data {
+  int eventId = [client broadcast:data eventType:@"update"];
+  return eventId;
+}
+-(int) broadcastDelete:(NSData *)data {
+  int eventId = [client broadcast:data eventType:@"delete"];
+  return eventId;
+}
+-(int) broadcastUndo:(NSData *)data {
+  int eventId = [client broadcast:data eventType:@"undo"];
+  return eventId;
+}
+-(int) broadcastRedo:(NSData *)data {
+  
+  int eventId = [client broadcast:data eventType:@"redo"];
+  return eventId;
+}
+
 
 @end

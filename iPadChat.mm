@@ -259,9 +259,6 @@
 // undo button
 -(void)undoButton{
   if( [noteData.undoManager canUndo] ) {
-    NSData *data = [@"undo" dataUsingEncoding:NSUTF8StringEncoding];
-    int eventId = [client broadcast:data eventType:@"undo"];
-    [list addObject:[NSString stringWithFormat:@"%i", eventId]];
     
     if ( didUndo ){
       [noteData.undoManager endUndoGrouping];
@@ -285,9 +282,6 @@
 }
 // redo button
 -(void)redoButton{
-  NSData *data = [@"redo" dataUsingEncoding:NSUTF8StringEncoding];
-  int eventId = [client broadcast:data eventType:@"redo"];
-  [list addObject:[NSString stringWithFormat:@"%i", eventId]];
   
   if( [noteData.undoManager canRedo] && ![noteData.undoManager isUndoing] ){
     
