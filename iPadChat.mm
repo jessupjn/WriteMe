@@ -26,21 +26,21 @@
 // UPDATES THE TEXT IF THE CLIENT DETECTS AN EVENT
 - (void)client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistationID eventType:(NSString *)eventType data:(NSData *)data
 {
-  
-  // parses apart the event that was receiverd
-  chalkBoard *newEvent = new chalkBoard;
-  newEvent->ParseFromArray([data bytes], [data length]);
-  std::string string = newEvent->changes();
-  NSString *objcString = [NSString stringWithCString:string.c_str() encoding:[NSString defaultCStringEncoding]];
-  int loc = newEvent->where();
-  [noteData setScrollEnabled:NO];
-
-  NSLog(@"%i %i %@", loc, submissionRegistationID, objcString);
-  
-  // if the other users added a letter
-  if ( ![list count] || ![list containsObject:[NSString stringWithFormat:@"%i", submissionRegistationID]] ) {
-    if ([eventType isEqualToString:@"update"]){
-      dispatch_async(dispatch_get_main_queue(),^{
+  dispatch_async(dispatch_get_main_queue(),^{
+    
+    // parses apart the event that was receiverd
+    chalkBoard *newEvent = new chalkBoard;
+    newEvent->ParseFromArray([data bytes], [data length]);
+    std::string string = newEvent->changes();
+    NSString *objcString = [NSString stringWithCString:string.c_str() encoding:[NSString defaultCStringEncoding]];
+    int loc = newEvent->where();
+    
+    NSLog(@"%i %i %@", loc, submissionRegistationID, objcString);
+    
+    if ( ![list count] || ![list containsObject:[NSString stringWithFormat:@"%i", submissionRegistationID]] ) {
+      
+      // if the other users added a letter
+      if ([eventType isEqualToString:@"update"]){
         if (loc > [noteData.text length]){
           [noteData setText:[NSString stringWithFormat:@"%@%@", noteData.text, objcString]];
         }
@@ -49,32 +49,32 @@
           NSString *secondHalf = [noteData.text substringFromIndex:loc];
           [noteData setText:[NSString stringWithFormat:@"%@%@%@", firstHalf, objcString, secondHalf]];
         }
-      });
+      }
+      // if the other users pressed undo
+      else if ( [eventType isEqualToString:@"undo"] ){
+        NSLog(@"He undid it!");
+        NSLog(@"%@", objcString);
+        [noteData setText:[NSString stringWithFormat:@"%@", objcString]];
+      }
+      // if the other users pressed redo
+      else if ( [eventType isEqualToString:@"redo"] ){
+        NSLog(@"He redid it!");
+        NSLog(@"%@", objcString);
+        [noteData setText:[NSString stringWithFormat:@"%@", objcString]];
+      }
+      // if the other users pressed backspace
+      else if ( [eventType isEqualToString:@"delete"] ){
+        NSLog(@"He backspaced! it!");
+        NSRange range = NSMakeRange(loc+1, 1);
+        [noteData setText:[noteData.text stringByReplacingCharactersInRange:range withString:@""]];
+      }
     }
-    // if the other users pressed undo
-    else if ( [eventType isEqualToString:@"undo"] ){
-      NSLog(@"He undid it!");
-      NSLog(@"%@", objcString);
-      [noteData setText:[NSString stringWithFormat:@"%@", objcString]];
+    else {
+      NSLog(@"Detected your event");
     }
-    // if the other users pressed redo
-    else if ( [eventType isEqualToString:@"redo"] ){
-      NSLog(@"He redid it!");
-      NSLog(@"%@", objcString);
-      [noteData setText:[NSString stringWithFormat:@"%@", objcString]];
-    }
-    // if the other users pressed backspace
-    else if ( [eventType isEqualToString:@"delete"] ){
-      NSLog(@"He backspaced! it!");
-      NSRange range = NSMakeRange(loc+1, 1);
-      [noteData setText:[noteData.text stringByReplacingCharactersInRange:range withString:@""]];
-    }
-  }
-  else {
-    NSLog(@"Detected your event");
-  }
-  [noteData setScrollEnabled:YES];
-
+    [noteData setScrollEnabled:YES];
+    
+  });
 }
 
 
@@ -335,10 +335,6 @@
   // if undo was pressed
   if (didUndo){
     didUndo = FALSE;
-    [addedString setString:noteData.text];
-    NSLog(@"UNDO:    %@", addedString);
-    theEvent->set_changes( [addedString UTF8String] );
-    std::string dataData = theEvent->SerializeAsString();
     data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
     eventId = [client broadcast:data eventType:@"undo"];
   }
@@ -346,9 +342,6 @@
   // if redo was pressed
   else if (didRedo){
     didRedo = FALSE;
-    [addedString setString:noteData.text];
-    theEvent->set_changes( [addedString UTF8String] );
-    std::string dataData = theEvent->SerializeAsString();
     data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
     eventId = [client broadcast:data eventType:@"redo"];
   }
