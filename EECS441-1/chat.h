@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Constant.h"
 #import <Collabrify/Collabrify.h>
+#import "eventKind.pb.h"
 
 @interface chat : UIViewController <CollabrifyClientDelegate, CollabrifyClientDataSource, UITableViewDelegate, UITableViewDataSource>{
   
@@ -25,10 +27,12 @@
   NSArray *currentUsers;
   
   NSTimer *participantsTimer;
-  int keepCount;
+  int keepCount, formerCursorPos, startPos, formerSize;
+  NSMutableString *addedString;
+  NSMutableArray *list;
   
-  IBOutlet UILabel *placeHolder;
-
+  chalkBoard *theEvent;
+  
 }
 
 @property (nonatomic, retain)  CollabrifyClient *client;

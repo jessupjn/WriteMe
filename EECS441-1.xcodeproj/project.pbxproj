@@ -16,7 +16,7 @@
 		0467E64C17DAC20D00F8AE10 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0467E64B17DAC20D00F8AE10 /* QuartzCore.framework */; };
 		0467E65017DD606900F8AE10 /* helpScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467E64F17DD606900F8AE10 /* helpScreen.m */; };
 		0467E65317DD6E8500F8AE10 /* createSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467E65217DD6E8500F8AE10 /* createSession.m */; };
-		0467E65917DEA95900F8AE10 /* chat.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467E65817DEA95900F8AE10 /* chat.m */; };
+		0467E65917DEA95900F8AE10 /* chat.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0467E65817DEA95900F8AE10 /* chat.mm */; };
 		04825B1F17DFBE83001518C0 /* Main-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04825B1D17DFBE83001518C0 /* Main-iPad.storyboard */; };
 		04825B2217DFE2C5001518C0 /* createSessioniPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 04825B2117DFE2C5001518C0 /* createSessioniPad.m */; };
 		04825B2517DFE829001518C0 /* joinSessioniPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 04825B2417DFE829001518C0 /* joinSessioniPad.m */; };
@@ -100,7 +100,7 @@
 		0467E65117DD6E8500F8AE10 /* createSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = createSession.h; sourceTree = "<group>"; };
 		0467E65217DD6E8500F8AE10 /* createSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = createSession.m; sourceTree = "<group>"; };
 		0467E65717DEA95900F8AE10 /* chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chat.h; sourceTree = "<group>"; };
-		0467E65817DEA95900F8AE10 /* chat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = chat.m; sourceTree = "<group>"; };
+		0467E65817DEA95900F8AE10 /* chat.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = chat.mm; sourceTree = "<group>"; };
 		04825B1E17DFBE83001518C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "EECS441-1/Base.lproj/Main-iPad.storyboard"; sourceTree = "<group>"; };
 		04825B2017DFE2C5001518C0 /* createSessioniPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = createSessioniPad.h; sourceTree = "<group>"; };
 		04825B2117DFE2C5001518C0 /* createSessioniPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = createSessioniPad.m; sourceTree = "<group>"; };
@@ -251,8 +251,8 @@
 			isa = PBXGroup;
 			children = (
 				041893C117F4A275006C0FB2 /* eventKind.proto */,
-				041893BE17F4A225006C0FB2 /* eventKind.pb.cc */,
 				041893BF17F4A225006C0FB2 /* eventKind.pb.h */,
+				041893BE17F4A225006C0FB2 /* eventKind.pb.cc */,
 			);
 			name = "Google Protocol Stuff";
 			sourceTree = "<group>";
@@ -286,7 +286,7 @@
 				0493F2F017DF7B9C00CB4621 /* joinSession.h */,
 				0493F2F117DF7B9C00CB4621 /* joinSession.m */,
 				0467E65717DEA95900F8AE10 /* chat.h */,
-				0467E65817DEA95900F8AE10 /* chat.m */,
+				0467E65817DEA95900F8AE10 /* chat.mm */,
 			);
 			name = iPhone;
 			sourceTree = "<group>";
@@ -648,7 +648,7 @@
 				04E427DD17DA56390081D40A /* extension_set.cc in Sources */,
 				04E427E417DA56390081D40A /* zero_copy_stream.cc in Sources */,
 				04E427DB17DA56390081D40A /* descriptor_database.cc in Sources */,
-				0467E65917DEA95900F8AE10 /* chat.m in Sources */,
+				0467E65917DEA95900F8AE10 /* chat.mm in Sources */,
 				04E427F217DA56390081D40A /* strutil.cc in Sources */,
 				04E427F417DA56390081D40A /* file.cc in Sources */,
 				04E427DE17DA56390081D40A /* extension_set_heavy.cc in Sources */,
@@ -800,7 +800,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/Jack/Documents/Notes/EECS441/Project1/EECS441-1",
+					"/Users/Jack/Documents/Notes/EECS441/Project1/EECS441-1/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EECS441-1/EECS441-1-Prefix.pch";
@@ -820,7 +820,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/Jack/Documents/Notes/EECS441/Project1/EECS441-1",
+					"/Users/Jack/Documents/Notes/EECS441/Project1/EECS441-1/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EECS441-1/EECS441-1-Prefix.pch";

@@ -33,9 +33,7 @@
   int keepCount, formerCursorPos, startPos, formerSize;
   NSMutableString *addedString;
   NSMutableArray *list;
-  
-  UILabel *placeHolder;
-  
+    
   chalkBoard *theEvent;
   
 }

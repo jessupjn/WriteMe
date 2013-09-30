@@ -17,6 +17,8 @@
 @synthesize client;
 @synthesize undoManager;
 
+
+// UPDATES THE TEXT IF THE CLIENT DETECTS AN EVENT
 - (void)client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistationID eventType:(NSString *)eventType data:(NSData *)data
 {
   chalkBoard *newEvent = new chalkBoard;
@@ -113,13 +115,6 @@
   [userList setDataSource:self], [userList setDelegate:self];
   [self.view addSubview:userList];
   
-  placeHolder = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
-  [placeHolder setText:@" Begin typing here..."];
-  [placeHolder setTextColor:[UIColor lightGrayColor]];
-  [noteData addSubview:placeHolder];
-  if( [noteData hasText]) [placeHolder setHidden:YES];
-  else [placeHolder setHidden:NO];
-  
   addedString = [[NSMutableString alloc] init];
   keepCount = formerSize = 0;
   
@@ -133,10 +128,6 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-  if( [[noteData text] isEqualToString:@""]){
-    if( [noteData hasText]) [placeHolder setHidden:YES];
-    else [placeHolder setHidden:NO];
-  }
     
   [[self navigationItem] setPrompt:[NSString stringWithFormat:@"Session ID: %lli", [client currentSessionID]]];
   [self buildButtons];
@@ -174,10 +165,6 @@
 - (void) onTheClock{
   
   if ( keepCount++ == 12 ) [self reloadTable], keepCount=0;
-  
-//  NSData* data;
-//  if ( numUsers == 1 ) [client broadcast:data eventType:@"update"];
-
 }
 
 // loads names into the table of participants and sets bar title.
@@ -269,10 +256,6 @@
 // -                    KEEP TRACK OF CHANGES                    - //
 // --------------------------------------------------------------- //
 -(void) textViewDidChange:(UITextView *)textView{
-  
-  // Defines when the placeholder is to be displayed.
-  if( [noteData hasText] ) [placeHolder setHidden:YES];
-  else [placeHolder setHidden:NO];
   
   if ( [noteData.text length]%10 == 0 ) [noteData.undoManager beginUndoGrouping];
   
