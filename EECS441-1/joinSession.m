@@ -148,6 +148,15 @@
         [wholeScreen setHidden:YES];
         [visableObj setHidden:YES];
         [spinner stopAnimating];
+        NSLog(@"%d", error.type);
+        NSLog(@"%d", CollabrifyServerSideErrorSessionAlreadyExists);
+        if (error.type == 205){
+          UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Session could not be found! Please check your ID number and try again!"
+                                                              message:nil delegate:self
+                                                    cancelButtonTitle:@"Okay"
+                                                    otherButtonTitles:nil];
+          [alertView show];
+        }
       }
     }];
   }

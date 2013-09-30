@@ -294,10 +294,10 @@
 		04825B1C17DFBE41001518C0 /* iPad */ = {
 			isa = PBXGroup;
 			children = (
-				04825B2317DFE829001518C0 /* joinSessioniPad.h */,
-				04825B2417DFE829001518C0 /* joinSessioniPad.m */,
 				04825B2017DFE2C5001518C0 /* createSessioniPad.h */,
 				04825B2117DFE2C5001518C0 /* createSessioniPad.m */,
+				04825B2317DFE829001518C0 /* joinSessioniPad.h */,
+				04825B2417DFE829001518C0 /* joinSessioniPad.m */,
 				04AB37A917E268FF00E53C9D /* iPadChat.h */,
 				04AB37AA17E268FF00E53C9D /* iPadChat.mm */,
 			);

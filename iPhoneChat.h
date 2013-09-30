@@ -31,6 +31,8 @@
   NSMutableString *addedString;
   NSMutableArray *list;
   bool didUndo;
+  bool didRedo;
+
 
 }
 
