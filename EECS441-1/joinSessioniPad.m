@@ -34,9 +34,8 @@
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
   NSLog(@"joinSessioniPad");
-  int w = self.view.frame.size.width;
-  int h = self.view.frame.size.height;
-  NSLog(@"%i %i", w, h);
+  int w = DEVICEWIDTH;
+  int h = DEVICEHEIGHT;
   wholeScreen = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2*w, 2*h)];
   [wholeScreen setBackgroundColor:[UIColor clearColor]];
   [wholeScreen setAlpha:1];
@@ -80,7 +79,6 @@
   if([[segue identifier] isEqualToString:@"joinTheSession"]){
     iPadChat *nextScreen = [segue destinationViewController];
     [nextScreen setClient:client];
-    NSLog(@"COPIED");
   }
 }
 
