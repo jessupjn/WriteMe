@@ -75,7 +75,7 @@
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
   if([[segue identifier] isEqualToString:@"createTheSession"]){
-    chat *nextScreen = [segue destinationViewController];
+    iPhoneChat *nextScreen = [segue destinationViewController];
     [nextScreen setClient:client];
   }
 }

@@ -10,13 +10,12 @@
 		040B8AAC17F34E23006E60BC /* showUsers.png in Resources */ = {isa = PBXBuildFile; fileRef = 040B8AAB17F34E23006E60BC /* showUsers.png */; };
 		040B8AAF17F3505E006E60BC /* hideUsers.png in Resources */ = {isa = PBXBuildFile; fileRef = 040B8AAE17F3505E006E60BC /* hideUsers.png */; };
 		040B8AB217F4099B006E60BC /* Notepad-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 040B8AB117F4099B006E60BC /* Notepad-icon.png */; };
-		041893C017F4A225006C0FB2 /* eventKind.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 041893BE17F4A225006C0FB2 /* eventKind.pb.cc */; };
 		041893C217F4A275006C0FB2 /* eventKind.proto in Resources */ = {isa = PBXBuildFile; fileRef = 041893C117F4A275006C0FB2 /* eventKind.proto */; };
+		042D9D8117F90BE1001A5462 /* eventKind.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 042D9D7F17F90BE1001A5462 /* eventKind.pb.cc */; };
 		0467E64A17DABF8A00F8AE10 /* TitleScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467E64917DABF8A00F8AE10 /* TitleScreen.m */; };
 		0467E64C17DAC20D00F8AE10 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0467E64B17DAC20D00F8AE10 /* QuartzCore.framework */; };
 		0467E65017DD606900F8AE10 /* helpScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467E64F17DD606900F8AE10 /* helpScreen.m */; };
 		0467E65317DD6E8500F8AE10 /* createSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467E65217DD6E8500F8AE10 /* createSession.m */; };
-		0467E65917DEA95900F8AE10 /* chat.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0467E65817DEA95900F8AE10 /* chat.mm */; };
 		04825B1F17DFBE83001518C0 /* Main-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04825B1D17DFBE83001518C0 /* Main-iPad.storyboard */; };
 		04825B2217DFE2C5001518C0 /* createSessioniPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 04825B2117DFE2C5001518C0 /* createSessioniPad.m */; };
 		04825B2517DFE829001518C0 /* joinSessioniPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 04825B2417DFE829001518C0 /* joinSessioniPad.m */; };
@@ -73,6 +72,7 @@
 		04E427F917DA56390081D40A /* wire_format_lite.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04E427D617DA56390081D40A /* wire_format_lite.cc */; };
 		04E427FB17DA57370081D40A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E427FA17DA57370081D40A /* SystemConfiguration.framework */; };
 		04E427FD17DA57450081D40A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E427FC17DA57450081D40A /* libz.dylib */; };
+		04FEEF6D17F905D10015CD45 /* iPhoneChat.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04FEEF6C17F905D10015CD45 /* iPhoneChat.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,9 +89,9 @@
 		040B8AAB17F34E23006E60BC /* showUsers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = showUsers.png; sourceTree = "<group>"; };
 		040B8AAE17F3505E006E60BC /* hideUsers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hideUsers.png; sourceTree = "<group>"; };
 		040B8AB117F4099B006E60BC /* Notepad-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Notepad-icon.png"; sourceTree = "<group>"; };
-		041893BE17F4A225006C0FB2 /* eventKind.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = eventKind.pb.cc; sourceTree = "<group>"; };
-		041893BF17F4A225006C0FB2 /* eventKind.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eventKind.pb.h; sourceTree = "<group>"; };
 		041893C117F4A275006C0FB2 /* eventKind.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eventKind.proto; sourceTree = "<group>"; };
+		042D9D7F17F90BE1001A5462 /* eventKind.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = eventKind.pb.cc; sourceTree = "<group>"; };
+		042D9D8017F90BE1001A5462 /* eventKind.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eventKind.pb.h; sourceTree = "<group>"; };
 		0467E64817DABF8900F8AE10 /* TitleScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleScreen.h; sourceTree = "<group>"; };
 		0467E64917DABF8A00F8AE10 /* TitleScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleScreen.m; sourceTree = "<group>"; };
 		0467E64B17DAC20D00F8AE10 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -99,8 +99,6 @@
 		0467E64F17DD606900F8AE10 /* helpScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = helpScreen.m; sourceTree = "<group>"; };
 		0467E65117DD6E8500F8AE10 /* createSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = createSession.h; sourceTree = "<group>"; };
 		0467E65217DD6E8500F8AE10 /* createSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = createSession.m; sourceTree = "<group>"; };
-		0467E65717DEA95900F8AE10 /* chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chat.h; sourceTree = "<group>"; };
-		0467E65817DEA95900F8AE10 /* chat.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = chat.mm; sourceTree = "<group>"; };
 		04825B1E17DFBE83001518C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "EECS441-1/Base.lproj/Main-iPad.storyboard"; sourceTree = "<group>"; };
 		04825B2017DFE2C5001518C0 /* createSessioniPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = createSessioniPad.h; sourceTree = "<group>"; };
 		04825B2117DFE2C5001518C0 /* createSessioniPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = createSessioniPad.m; sourceTree = "<group>"; };
@@ -216,6 +214,8 @@
 		04E427D817DA56390081D40A /* wire_format_lite_inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wire_format_lite_inl.h; sourceTree = "<group>"; };
 		04E427FA17DA57370081D40A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		04E427FC17DA57450081D40A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		04FEEF6B17F905D10015CD45 /* iPhoneChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPhoneChat.h; path = ../iPhoneChat.h; sourceTree = "<group>"; };
+		04FEEF6C17F905D10015CD45 /* iPhoneChat.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iPhoneChat.mm; path = ../iPhoneChat.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,8 +251,8 @@
 			isa = PBXGroup;
 			children = (
 				041893C117F4A275006C0FB2 /* eventKind.proto */,
-				041893BF17F4A225006C0FB2 /* eventKind.pb.h */,
-				041893BE17F4A225006C0FB2 /* eventKind.pb.cc */,
+				042D9D7F17F90BE1001A5462 /* eventKind.pb.cc */,
+				042D9D8017F90BE1001A5462 /* eventKind.pb.h */,
 			);
 			name = "Google Protocol Stuff";
 			sourceTree = "<group>";
@@ -285,8 +285,8 @@
 				0467E65217DD6E8500F8AE10 /* createSession.m */,
 				0493F2F017DF7B9C00CB4621 /* joinSession.h */,
 				0493F2F117DF7B9C00CB4621 /* joinSession.m */,
-				0467E65717DEA95900F8AE10 /* chat.h */,
-				0467E65817DEA95900F8AE10 /* chat.mm */,
+				04FEEF6B17F905D10015CD45 /* iPhoneChat.h */,
+				04FEEF6C17F905D10015CD45 /* iPhoneChat.mm */,
 			);
 			name = iPhone;
 			sourceTree = "<group>";
@@ -621,7 +621,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				041893C017F4A225006C0FB2 /* eventKind.pb.cc in Sources */,
+				042D9D8117F90BE1001A5462 /* eventKind.pb.cc in Sources */,
 				04E427E817DA56390081D40A /* message_lite.cc in Sources */,
 				04E427E917DA56390081D40A /* reflection_ops.cc in Sources */,
 				04E427F117DA56390081D40A /* structurally_valid.cc in Sources */,
@@ -633,6 +633,7 @@
 				04E427E717DA56390081D40A /* message.cc in Sources */,
 				04E427E517DA56390081D40A /* zero_copy_stream_impl.cc in Sources */,
 				0467E65317DD6E8500F8AE10 /* createSession.m in Sources */,
+				04FEEF6D17F905D10015CD45 /* iPhoneChat.mm in Sources */,
 				04E427F717DA56390081D40A /* unknown_field_set.cc in Sources */,
 				04E427D917DA56390081D40A /* descriptor.cc in Sources */,
 				04E427E217DA56390081D40A /* printer.cc in Sources */,
@@ -648,7 +649,6 @@
 				04E427DD17DA56390081D40A /* extension_set.cc in Sources */,
 				04E427E417DA56390081D40A /* zero_copy_stream.cc in Sources */,
 				04E427DB17DA56390081D40A /* descriptor_database.cc in Sources */,
-				0467E65917DEA95900F8AE10 /* chat.mm in Sources */,
 				04E427F217DA56390081D40A /* strutil.cc in Sources */,
 				04E427F417DA56390081D40A /* file.cc in Sources */,
 				04E427DE17DA56390081D40A /* extension_set_heavy.cc in Sources */,

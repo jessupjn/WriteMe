@@ -299,10 +299,10 @@
             </objects>
             <point key="canvasLocation" x="246" y="768"/>
         </scene>
-        <!--Chat - Notepad-->
+        <!--I Phone Chat - Notepad-->
         <scene sceneID="Y8R-XM-sQH">
             <objects>
-                <viewController id="DeA-7w-eJt" customClass="chat" sceneMemberID="viewController">
+                <viewController id="DeA-7w-eJt" customClass="iPhoneChat" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="j98-6i-85m"/>
                         <viewControllerLayoutGuide type="bottom" id="JOO-7W-Pbu"/>

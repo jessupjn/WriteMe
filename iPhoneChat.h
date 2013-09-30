@@ -1,24 +1,24 @@
 //
-//  chat.h
+//  iPhoneChat.h
 //  EECS441-1
 //
-//  Created by Jackson on 9/9/13.
+//  Created by Jackson on 9/29/13.
 //
 //
 
 #import <UIKit/UIKit.h>
 #import "Constant.h"
 #import <Collabrify/Collabrify.h>
-#import "eventKind.pb.h"
 
-@interface chat : UIViewController <CollabrifyClientDelegate, CollabrifyClientDataSource, UITableViewDelegate, UITableViewDataSource>{
+
+@interface iPhoneChat : UIViewController <CollabrifyClientDelegate, CollabrifyClientDataSource, UITableViewDelegate, UITableViewDataSource>{
   
   IBOutlet UIBarButtonItem *usersToggle;
   UITableView *listUsers;
   IBOutlet UITextView *noteData;
   IBOutlet UIView *contentView;
   UIToolbar *keyboardbuttons;
-  NSString *iPadUsersTitle;  
+  NSString *iPadUsersTitle;
   UIView *showUsersBackground;
   
   CollabrifyClient *client;
@@ -30,14 +30,11 @@
   int keepCount, formerCursorPos, startPos, formerSize;
   NSMutableString *addedString;
   NSMutableArray *list;
-  
-  chalkBoard *theEvent;
-  
+    
 }
 
 @property (nonatomic, retain)  CollabrifyClient *client;
 @property (nonatomic, retain)  UITableView *listUsers;
-
 
 -(IBAction) showUsers:(id) sender;
 

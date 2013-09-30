@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "Constant.h"
 #import <Collabrify/Collabrify.h>
-#import "eventKind.pb.h"
 
 @interface iPadChat : UIViewController{
   
@@ -33,8 +32,6 @@
   int keepCount, formerCursorPos, startPos, formerSize;
   NSMutableString *addedString;
   NSMutableArray *list;
-    
-  chalkBoard *theEvent;
   
 }
 

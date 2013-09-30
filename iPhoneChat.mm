@@ -1,21 +1,26 @@
 //
-//  chat.m
+//  iPhoneChatViewController.m
 //  EECS441-1
 //
-//  Created by Jackson on 9/9/13.
+//  Created by Jackson on 9/29/13.
 //
 //
 
-#import "chat.h"
+#import "iPhoneChat.h"
+#import "eventKind.pb.h"
 
-@interface chat () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, CollabrifyClientDataSource, CollabrifyClientDelegate>
+@interface iPhoneChat () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, CollabrifyClientDataSource, CollabrifyClientDelegate>
+
+@property (nonatomic) chalkBoard *theEvent;
 
 @end
 
-@implementation chat
+@implementation iPhoneChat
 
 @synthesize client;
 @synthesize listUsers;
+@synthesize theEvent;
+
 
 
 // UPDATES THE TEXT IF THE CLIENT DETECTS AN EVENT
@@ -57,8 +62,6 @@
   
 }
 
-
-
 //    TableView (populated with users)
 //------------------------------------------------------
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -80,6 +83,9 @@
   [[cell textLabel] setTextAlignment:NSTextAlignmentCenter];
   return cell;
 }
+//------------------------------------------------------
+//------------------------------------------------------
+
 
 
 
@@ -94,7 +100,7 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+  [super viewDidLoad];
 	// Do any additional setup after loading the view.
   [usersToggle setTitle:@"Show Users"];
   [noteData setFrame:CGRectMake(0, 94, 320, 474)];
@@ -168,7 +174,7 @@
   [noteData resignFirstResponder];
   if([[usersToggle title] isEqualToString:@"Show Users"]){
     [self reloadTable];
-
+    
     [[self navigationItem] setTitle:iPadUsersTitle];
     [UIView animateWithDuration:0.3 animations:^(void){
       [showUsersBackground setFrame:CGRectMake(0, 94, 320, 474)];
@@ -178,14 +184,13 @@
   }
   else{
     [[self navigationItem] setTitle:@"Notepad"];
-      [UIView animateWithDuration:0.2 animations:^(void){
+    [UIView animateWithDuration:0.2 animations:^(void){
       [showUsersBackground setFrame:CGRectMake(320, 94, 320, 474)];
       [listUsers setFrame:CGRectMake(380, 94, 200, 474)];
       [usersToggle setTitle:@"Show Users"];
     }];
   }
 }
-
 
 // function called by the timer
 - (void) onTheClock{
@@ -203,7 +208,6 @@
     iPadUsersTitle = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d Users", numUsers]];
   [listUsers reloadData];
 }
-
 
 //                    KEYBOARD MOVEMENTS/LOGISTICS
 // ---------------------------------------------------------------
@@ -270,6 +274,7 @@
 // ---------------------------------------------------------------
 // ---------------------------------------------------------------
 
+
 // --------------------------------------------------------------- //
 // -                    KEEP TRACK OF CHANGES                    - //
 // --------------------------------------------------------------- //
@@ -291,15 +296,14 @@
   if ( formerSize > [noteData.text length] )
     addedString = [NSMutableString stringWithFormat:@"backPressed"];
   
-  theEvent->set_changes( [addedString UTF8String] );
-  theEvent->set_where( noteData.selectedRange.location - 1);
+    theEvent->set_changes( [addedString UTF8String] );
+    theEvent->set_where( noteData.selectedRange.location - 1);
   
-  std::string dataData = theEvent->SerializeAsString();
-  data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
+    std::string dataData = theEvent->SerializeAsString();
+    data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
   int eventId = [client broadcast:data eventType:@"update"];
   [list addObject:[NSString stringWithFormat:@"%i", eventId]];
   formerSize = [noteData.text length];
 }
-
 
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Collabrify/Collabrify.h>
-#import "chat.h"
+#import "iPadChat.h"
 
 @interface joinSessioniPad : UIViewController{
   IBOutlet UIView *infoBackground;

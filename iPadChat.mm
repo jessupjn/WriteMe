@@ -7,14 +7,19 @@
 //
 
 #import "iPadChat.h"
+#import "eventKind.pb.h"
+
 
 @interface iPadChat () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, CollabrifyClientDataSource, CollabrifyClientDelegate>
+
+@property (nonatomic) chalkBoard *theEvent;
 
 @end
 
 @implementation iPadChat
 
 @synthesize client;
+@synthesize theEvent;
 @synthesize undoManager;
 
 
