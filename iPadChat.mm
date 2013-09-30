@@ -31,25 +31,33 @@
   std::string string = newEvent->changes();
   NSString *objcString = [NSString stringWithCString:string.c_str() encoding:[NSString defaultCStringEncoding]];
   int loc = newEvent->where();
-  
-  if ( loc > [noteData.text length] ) loc = [noteData.text length] - 1;
-  if ( ![list count] || [[list objectAtIndex:0] intValue] != submissionRegistationID ) {
+  if ( ![list count] || ![list containsObject:[NSString stringWithFormat:@"%i", submissionRegistationID]] ) {
     dispatch_async(dispatch_get_main_queue(),^{
       
       // delete key was pressed.
       if ( [objcString isEqualToString:@"backPressed"] ) {
         NSLog(@"Delete Was Pressed");
-        
+        NSString *firstHalf = [noteData.text substringToIndex:loc+1];
+        NSString *secondHalf = [noteData.text substringFromIndex:loc+2];
+        [noteData setText:[NSString stringWithFormat:@"%@%@", firstHalf, secondHalf]];
+
         return;
       }
       // another key was pressed
       else {
-        [noteData setScrollEnabled:NO];
-        NSLog(@"%i %@", loc, objcString);
-        NSString *firstHalf = [noteData.text substringToIndex:loc];
-        NSString *secondHalf = [noteData.text substringFromIndex:loc];
-        [noteData setText:[NSString stringWithFormat:@"%@%@%@", firstHalf, objcString, secondHalf]];
-        [noteData setScrollEnabled:YES];
+        NSLog(@"%i %i %@", loc, submissionRegistationID, objcString);
+        if (loc > [noteData.text length]){
+          [noteData setScrollEnabled:NO];
+          [noteData setText:[NSString stringWithFormat:@"%@%@", noteData.text, objcString]];
+          [noteData setScrollEnabled:YES];
+        }
+        else{
+          [noteData setScrollEnabled:NO];
+          NSString *firstHalf = [noteData.text substringToIndex:loc];
+          NSString *secondHalf = [noteData.text substringFromIndex:loc];
+          [noteData setText:[NSString stringWithFormat:@"%@%@%@", firstHalf, objcString, secondHalf]];
+          [noteData setScrollEnabled:YES];
+        }
         return;
       }
     });
@@ -144,9 +152,7 @@
   
   [noteData.undoManager setGroupsByEvent:NO];
   [noteData.undoManager beginUndoGrouping];
-  [noteData.undoManager endUndoGrouping];
-  [noteData.undoManager beginUndoGrouping];
-
+  didUndo=FALSE;
 }
 
 - (void)didReceiveMemoryWarning
@@ -225,8 +231,20 @@
 }
 // undo button
 -(void)undoButton{
-  if( [noteData.undoManager canUndo] )
-    [noteData.undoManager endUndoGrouping], [noteData.undoManager undoNestedGroup];
+  if( [noteData.undoManager canUndo] ) {
+    didUndo = TRUE;
+    if ( didUndo ){
+      [noteData.undoManager endUndoGrouping];
+      [noteData.undoManager undoNestedGroup];
+      [noteData.undoManager undoNestedGroup];
+      [noteData.undoManager beginUndoGrouping];
+    }
+    else {
+      [noteData.undoManager endUndoGrouping];
+      [noteData.undoManager undoNestedGroup];
+      [noteData.undoManager beginUndoGrouping];
+    }
+  }
   else NSLog(@"CANT UNDO");
 }
 // done button
@@ -235,8 +253,14 @@
 }
 // redo button
 -(void)redoButton{
-  if( [noteData.undoManager canRedo] && ![noteData.undoManager isUndoing] )
-    [noteData.undoManager endUndoGrouping], [noteData.undoManager redo];
+  if( [noteData.undoManager canRedo] && ![noteData.undoManager isUndoing] ){
+    [noteData.undoManager redo];
+    if ([noteData.undoManager canRedo]){
+      [noteData.undoManager endUndoGrouping];
+      [noteData.undoManager beginUndoGrouping];
+      [noteData.undoManager redo];
+    }
+  }
   else NSLog(@"CANT REDO");
 }
 // shrinking the boxes when the keyboard comes up.
@@ -262,7 +286,9 @@
 // --------------------------------------------------------------- //
 -(void) textViewDidChange:(UITextView *)textView{
   
-  if ( [noteData.text length]%10 == 0 ) [noteData.undoManager beginUndoGrouping];
+  didUndo = FALSE;
+  if ( [noteData.text length]%10 == 0 )
+    [noteData.undoManager endUndoGrouping], [noteData.undoManager beginUndoGrouping];
   
   
   // current position of the cursor
