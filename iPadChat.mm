@@ -65,7 +65,9 @@
       // if the other users pressed backspace
       else if ( [eventType isEqualToString:@"delete"] ){
         NSLog(@"He backspaced! it!");
-        NSRange range = NSMakeRange(loc+1, 1);
+        loc++;
+        
+        NSRange range = NSMakeRange(loc, 1);
         if ( [noteData.text length] > loc ){
           
           // if the delete call is valid
@@ -200,6 +202,7 @@
 - (void) onTheClock{
   
   if ( keepCount++ == 12 ) [self reloadTable], keepCount=0;
+  formerSize = [noteData.text length];
 }
 
 // loads names into the table of participants and sets bar title.
@@ -260,7 +263,6 @@
     int eventId = [client broadcast:data eventType:@"undo"];
     [list addObject:[NSString stringWithFormat:@"%i", eventId]];
     
-    didUndo = TRUE;
     if ( didUndo ){
       [noteData.undoManager endUndoGrouping];
       [noteData.undoManager undoNestedGroup];
@@ -272,8 +274,10 @@
       [noteData.undoManager undoNestedGroup];
       [noteData.undoManager beginUndoGrouping];
     }
+    didUndo = TRUE;
+
   }
-  else NSLog(@"CANT UNDO");
+  else NSLog(@"CANT UNDO"), didUndo=FALSE;
 }
 // done button
 -(void)doneButton{
@@ -295,7 +299,7 @@
       [noteData.undoManager redo];
     }
   }
-  else NSLog(@"CANT REDO");
+  else NSLog(@"CANT REDO"), didRedo=FALSE;
 }
 // shrinking the boxes when the keyboard comes up.
 - (void)notepadSizeDown:(NSNotification*)notification{
@@ -337,8 +341,9 @@
   if ( formerSize > [noteData.text length] )
     addedString = [NSMutableString stringWithFormat:@"backPressed"];
   
-  if (didUndo || didRedo)
-    addedString = [NSMutableString stringWithFormat:@"%@", noteData.text];
+  if (didUndo || didRedo){
+      addedString = [NSMutableString stringWithFormat:@"%@", noteData.text];
+  }
   
   theEvent->set_changes( [addedString UTF8String] );
   theEvent->set_where( noteData.selectedRange.location - 1);
@@ -393,6 +398,7 @@
   return eventId;
 }
 -(int) broadcastRedo:(NSData *)data {
+  
   int eventId = [client broadcast:data eventType:@"redo"];
   return eventId;
 }
