@@ -137,6 +137,8 @@
 	// Do any additional setup after loading the view.
   [usersToggle setTitle:@"Show Users"];
   noteData = [[UITextView alloc] initWithFrame:CGRectMake(0, 94, DEVICEWIDTH, DEVICEHEIGHT-94)];
+  [noteData setAutocorrectionType:UITextAutocorrectionTypeNo];
+  [noteData setAutocapitalizationType:UITextAutocapitalizationTypeSentences];
   [self.view addSubview:noteData];
   
   showUsersBackground = [[UIView alloc] initWithFrame:CGRectMake(320, 94, 320, 474)];
@@ -280,6 +282,7 @@
 -(void)undoButton{
   if( [noteData.undoManager canUndo] ) {
     
+    didUndo = TRUE;
     if ( didUndo ){
       [noteData.undoManager endUndoGrouping];
       [noteData.undoManager undoNestedGroup];
@@ -291,7 +294,6 @@
       [noteData.undoManager undoNestedGroup];
       [noteData.undoManager beginUndoGrouping];
     }
-    didUndo = TRUE;
     
   }
   else NSLog(@"CANT UNDO"), didUndo=FALSE;

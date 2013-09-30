@@ -260,6 +260,7 @@
 -(void)undoButton{
   if( [noteData.undoManager canUndo] ) {
     
+    didUndo = TRUE;
     if ( didUndo ){
       [noteData.undoManager endUndoGrouping];
       [noteData.undoManager undoNestedGroup];
