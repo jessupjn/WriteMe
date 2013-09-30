@@ -135,6 +135,7 @@
                                                       repeats:YES];
   theEvent = new chalkBoard;
   list = [[NSMutableArray alloc] init];
+  didUndo=FALSE;
   
 }
 
@@ -152,6 +153,7 @@
   [noteData.undoManager beginUndoGrouping];
   [noteData.undoManager endUndoGrouping];
   [noteData.undoManager beginUndoGrouping];
+  
 }
 
 - (void)didReceiveMemoryWarning
@@ -247,8 +249,20 @@
 }
 // undo button
 -(void)undoButton{
-  if( [noteData.undoManager canUndo] )
-    [noteData.undoManager endUndoGrouping], [noteData.undoManager undoNestedGroup];
+  if( [noteData.undoManager canUndo] ) {
+    didUndo = TRUE;
+    if ( didUndo ){
+      [noteData.undoManager endUndoGrouping];
+      [noteData.undoManager undoNestedGroup];
+      [noteData.undoManager undoNestedGroup];
+      [noteData.undoManager beginUndoGrouping];
+    }
+    else {
+      [noteData.undoManager endUndoGrouping];
+      [noteData.undoManager undoNestedGroup];
+      [noteData.undoManager beginUndoGrouping];
+    }
+  }
   else NSLog(@"CANT UNDO");
 }
 // done button
@@ -257,8 +271,14 @@
 }
 // redo button
 -(void)redoButton{
-  if( [noteData.undoManager canRedo] && ![noteData.undoManager isUndoing] )
-    [noteData.undoManager endUndoGrouping], [noteData.undoManager redo];
+  if( [noteData.undoManager canRedo] && ![noteData.undoManager isUndoing] ){
+    [noteData.undoManager redo];
+    if ([noteData.undoManager canRedo]){
+      [noteData.undoManager endUndoGrouping];
+      [noteData.undoManager beginUndoGrouping];
+      [noteData.undoManager redo];
+    }
+  }
   else NSLog(@"CANT REDO");
 }
 - (void)notepadSizeDown:(NSNotification*)notification{
@@ -280,7 +300,9 @@
 // --------------------------------------------------------------- //
 -(void) textViewDidChange:(UITextView *)textView{
   
-  if ( [noteData.text length]%10 == 0 ) [noteData.undoManager beginUndoGrouping];
+  didUndo = FALSE;
+  if ( [noteData.text length]%10 == 0 )
+    [noteData.undoManager endUndoGrouping], [noteData.undoManager beginUndoGrouping];
   
   
   // current position of the cursor
@@ -296,11 +318,11 @@
   if ( formerSize > [noteData.text length] )
     addedString = [NSMutableString stringWithFormat:@"backPressed"];
   
-    theEvent->set_changes( [addedString UTF8String] );
-    theEvent->set_where( noteData.selectedRange.location - 1);
+  theEvent->set_changes( [addedString UTF8String] );
+  theEvent->set_where( noteData.selectedRange.location - 1);
   
-    std::string dataData = theEvent->SerializeAsString();
-    data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
+  std::string dataData = theEvent->SerializeAsString();
+  data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
   int eventId = [client broadcast:data eventType:@"update"];
   [list addObject:[NSString stringWithFormat:@"%i", eventId]];
   formerSize = [noteData.text length];

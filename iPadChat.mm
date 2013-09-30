@@ -26,25 +26,18 @@
 // UPDATES THE TEXT IF THE CLIENT DETECTS AN EVENT
 - (void)client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistationID eventType:(NSString *)eventType data:(NSData *)data
 {
+  
+  // parses apart the event that was receiverd
   chalkBoard *newEvent = new chalkBoard;
   newEvent->ParseFromArray([data bytes], [data length]);
   std::string string = newEvent->changes();
   NSString *objcString = [NSString stringWithCString:string.c_str() encoding:[NSString defaultCStringEncoding]];
   int loc = newEvent->where();
-  if ( ![list count] || ![list containsObject:[NSString stringWithFormat:@"%i", submissionRegistationID]] ) {
-    dispatch_async(dispatch_get_main_queue(),^{
-      
-      // delete key was pressed.
-      if ( [objcString isEqualToString:@"backPressed"] ) {
-        NSLog(@"Delete Was Pressed");
-        NSString *firstHalf = [noteData.text substringToIndex:loc+1];
-        NSString *secondHalf = [noteData.text substringFromIndex:loc+2];
-        [noteData setText:[NSString stringWithFormat:@"%@%@", firstHalf, secondHalf]];
-
-        return;
-      }
-      // another key was pressed
-      else {
+  
+  // if the other users added a letter
+  if ([eventType isEqualToString:@"update"]){
+    if ( ![list count] || ![list containsObject:[NSString stringWithFormat:@"%i", submissionRegistationID]] ) {
+      dispatch_async(dispatch_get_main_queue(),^{
         NSLog(@"%i %i %@", loc, submissionRegistationID, objcString);
         if (loc > [noteData.text length]){
           [noteData setScrollEnabled:NO];
@@ -59,15 +52,32 @@
           [noteData setScrollEnabled:YES];
         }
         return;
-      }
-    });
+      });
+    }
+    else {
+      [list removeObjectAtIndex:0];
+      NSLog(@"Detected your event");
+      return;
+    }
   }
-  else {
-    [list removeObjectAtIndex:0];
-    NSLog(@"Detected your event");
-    return;
+  // if the other users pressed undo
+  else if ( [eventType isEqualToString:@"undo"] ){
+    NSLog(@"He undid it!");
+    [self undoButton];
   }
-  
+  // if the other users pressed redo
+  else if ( [eventType isEqualToString:@"redo"] ){
+    NSLog(@"He redid it!");
+    [self redoButton];
+  }
+  // if the other users pressed backspace
+  else if ( [eventType isEqualToString:@"delete"] ){
+    NSLog(@"He backspaced! it!");
+    NSLog(@"Delete Was Pressed");
+    NSString *firstHalf = [noteData.text substringToIndex:loc+1];
+    NSString *secondHalf = [noteData.text substringFromIndex:loc+2];
+    [noteData setText:[NSString stringWithFormat:@"%@%@", firstHalf, secondHalf]];
+  }
 }
 
 
@@ -152,7 +162,7 @@
   
   [noteData.undoManager setGroupsByEvent:NO];
   [noteData.undoManager beginUndoGrouping];
-  didUndo=FALSE;
+  didUndo = didRedo = FALSE;
 }
 
 - (void)didReceiveMemoryWarning
@@ -232,6 +242,10 @@
 // undo button
 -(void)undoButton{
   if( [noteData.undoManager canUndo] ) {
+    NSData *data = [@"undo" dataUsingEncoding:NSUTF8StringEncoding];
+    int eventId = [client broadcast:data eventType:@"undo"];
+    [list addObject:[NSString stringWithFormat:@"%i", eventId]];
+    
     didUndo = TRUE;
     if ( didUndo ){
       [noteData.undoManager endUndoGrouping];
@@ -253,7 +267,13 @@
 }
 // redo button
 -(void)redoButton{
+  NSData *data = [@"redo" dataUsingEncoding:NSUTF8StringEncoding];
+  int eventId = [client broadcast:data eventType:@"redo"];
+  [list addObject:[NSString stringWithFormat:@"%i", eventId]];
+  
   if( [noteData.undoManager canRedo] && ![noteData.undoManager isUndoing] ){
+    
+    didRedo = TRUE;
     [noteData.undoManager redo];
     if ([noteData.undoManager canRedo]){
       [noteData.undoManager endUndoGrouping];
@@ -286,7 +306,6 @@
 // --------------------------------------------------------------- //
 -(void) textViewDidChange:(UITextView *)textView{
   
-  didUndo = FALSE;
   if ( [noteData.text length]%10 == 0 )
     [noteData.undoManager endUndoGrouping], [noteData.undoManager beginUndoGrouping];
   
@@ -309,7 +328,29 @@
   
   std::string dataData = theEvent->SerializeAsString();
   data = [NSData dataWithBytes:dataData.c_str() length:dataData.size()];
-  int eventId = [client broadcast:data eventType:@"update"];
+  int eventId;
+  
+  //backspace key was pressed.
+  if ( [addedString isEqualToString:@"backPressed"] )
+    eventId = [client broadcast:data eventType:@"delete"];
+  
+  // if undo was pressed
+  else if (didUndo){
+    didUndo = FALSE;
+    eventId = [client broadcast:data eventType:@"undo"];
+  }
+  
+  // if redo was pressed
+  else if (didRedo){
+    didRedo = FALSE;
+    eventId = [client broadcast:data eventType:@"redo"];
+  }
+  
+  // adding a letter to the data.
+  else
+    eventId = [client broadcast:data eventType:@"update"];
+  
+  // add to list of your events.
   [list addObject:[NSString stringWithFormat:@"%i", eventId]];
   formerSize = [noteData.text length];
 }

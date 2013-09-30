@@ -30,7 +30,8 @@
   int keepCount, formerCursorPos, startPos, formerSize;
   NSMutableString *addedString;
   NSMutableArray *list;
-    
+  bool didUndo;
+
 }
 
 @property (nonatomic, retain)  CollabrifyClient *client;
