@@ -118,8 +118,8 @@
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
   [usersToggle setTitle:@"Show Users"];
-  [noteData setFrame:CGRectMake(0, 94, 320, 474)];
-  [noteData setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+  noteData = [[UITextView alloc] initWithFrame:CGRectMake(0, 94, DEVICEWIDTH, DEVICEHEIGHT-94)];
+  [self.view addSubview:noteData];
   
   showUsersBackground = [[UIView alloc] initWithFrame:CGRectMake(320, 94, 320, 474)];
   [showUsersBackground setBackgroundColor:[UIColor blackColor]];
@@ -298,12 +298,12 @@
 }
 - (void)notepadSizeDown:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
-  [noteData setFrame:CGRectMake(0, 0, noteData.frame.size.width, noteData.frame.size.height - keyboardHeight)];
+  [noteData setFrame:CGRectMake(0, 94, DEVICEWIDTH, noteData.frame.size.height - keyboardHeight)];
   [listUsers setFrame:CGRectMake(listUsers.frame.origin.x, listUsers.frame.origin.y, listUsers.frame.size.width, listUsers.frame.size.height - keyboardHeight)];
 }
 - (void)notepadSizeUp:(NSNotification*)notification{
   int keyboardHeight = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
-  [noteData setFrame:CGRectMake(0, 0, noteData.frame.size.width, noteData.frame.size.height + keyboardHeight)];
+  [noteData setFrame:CGRectMake(0, 94, DEVICEWIDTH, noteData.frame.size.height + keyboardHeight)];
   [listUsers setFrame:CGRectMake(listUsers.frame.origin.x, listUsers.frame.origin.y, listUsers.frame.size.width, listUsers.frame.size.height + keyboardHeight)];
 }
 // ---------------------------------------------------------------
